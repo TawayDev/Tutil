@@ -1,11 +1,10 @@
-package dev.taway.other;
+package dev.taway.time;
 
-import dev.taway.RunningConfig;
+import dev.taway.RuntimeConfig;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class Stopwatch {
@@ -36,9 +35,10 @@ public class Stopwatch {
     }
 
     public String getFormattedTime() {
-        Date date = new Date(elapsedMillis);
-        DateFormat formatter = new SimpleDateFormat(RunningConfig.stopwatchTimeFormat);
-        formatter.setTimeZone(TimeZone.getTimeZone(RunningConfig.stopwatchTimeZone));
-        return formatter.format(date);
+//        Date date = new Date(elapsedMillis);
+//        DateFormat formatter = new SimpleDateFormat(RuntimeConfig.STOPWATCH.stopwatchTimeFormat);
+//        formatter.setTimeZone(TimeZone.getTimeZone(RuntimeConfig.STOPWATCH.stopwatchTimeZone));
+//        return formatter.format(date);
+        return Formatter.formatTime(elapsedMillis);
     }
 }

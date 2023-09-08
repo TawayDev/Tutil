@@ -1,6 +1,8 @@
 package dev.taway.api;
 
-import dev.taway.other.Stopwatch;
+import dev.taway.logging.LogLevel;
+import dev.taway.logging.Logger;
+import dev.taway.time.Stopwatch;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -15,6 +17,7 @@ public class ApiHandler implements IApiHandler{
     ArrayList<IRequestObject> requestQueue = new ArrayList<>();
     ArrayList<IResponseObject> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
+    Logger logger = new Logger("ApiHandler");
     @Override
     public ResponseObject post(IRequestObject requestObject) {
         try {
@@ -51,8 +54,7 @@ public class ApiHandler implements IApiHandler{
 //            Return
             return new ResponseObject(requestObject, jsonHeaders, responseJsonObject, response.body(), response.statusCode(), stopwatch.getElapsedMillis(), requestObject.getParseBodyAsJSON());
         } catch (Exception exception) {
-            // TODO: logging
-            System.out.println(exception.toString());
+            logger.log(LogLevel.FATAL, "post", exception.getMessage());
             return null;
         }
     }

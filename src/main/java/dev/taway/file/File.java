@@ -1,5 +1,8 @@
 package dev.taway.file;
 
+import dev.taway.logging.LogLevel;
+import dev.taway.logging.Logger;
+
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -7,12 +10,14 @@ import java.util.ArrayList;
 
 /***
  * A simple wrapper for java.io.File
+ * @version 0.1.1
  * @since 0.1
  */
 public class File implements IFile{
 
     String absolutePath;
     String path;
+    Logger logger = new Logger("File");
     public File(String path) {
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();
@@ -22,6 +27,7 @@ public class File implements IFile{
     /**
      * If the file does not exist it creates it.
      * @return If the file was created it returns true otherwise false
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -30,7 +36,7 @@ public class File implements IFile{
             java.io.File file = new java.io.File(absolutePath);
             return file.exists() ? true : file.createNewFile();
         } catch (IOException exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "create", exception.getMessage());
         }
         return false;
     }
@@ -38,6 +44,7 @@ public class File implements IFile{
     /**
      * If the file exists it deletes it.
      * @return Returns true if the file doesn't exist.
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -46,13 +53,14 @@ public class File implements IFile{
             java.io.File file = new java.io.File(absolutePath);
             return file.exists() ? file.delete() : true;
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "delete", exception.getMessage());
         }
         return false;
     }
 
     /**
      * Deletes the file on virtual machine exit.
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -61,7 +69,7 @@ public class File implements IFile{
             java.io.File file = new java.io.File(absolutePath);
             file.deleteOnExit();
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "deleteOnExit", exception.getMessage());
         }
     }
 
@@ -79,6 +87,7 @@ public class File implements IFile{
     /**
      * Overwrites the file with specified text.
      * @param text Text to be written
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -90,13 +99,14 @@ public class File implements IFile{
             fileWriter.flush();
             fileWriter.close();
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "overwrite", exception.getMessage());
         }
     }
 
     /**
      * Appends text to the end of the file.
      * @param text Text to be written
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -109,13 +119,14 @@ public class File implements IFile{
             bufferedWriter.append(text);
             bufferedWriter.close();
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "append", exception.getMessage());
         }
     }
 
     /***
      * Appends to the end of the file.
      * @param text Text to append
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -127,13 +138,14 @@ public class File implements IFile{
             bufferedWriter.append(text);
             bufferedWriter.close();
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "append", exception.getMessage());
         }
     }
 
     /**
      * Reads the whole file and returns it as a single string. New lines are separated by \n
      * @return File as string.
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -150,7 +162,7 @@ public class File implements IFile{
 //            Remove trailing new line character and return:
             return stringBuilder.length() > 1 ? stringBuilder.substring(0, stringBuilder.length()-1) : stringBuilder.toString();
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "readAllAsString", exception.getMessage());
         }
         return "";
     }
@@ -158,6 +170,7 @@ public class File implements IFile{
     /**
      * Reads the whole file and returns it as a string array. Each line is on a separate position in the array.
      * @return File as string array.
+     * @version 0.1.1
      * @since 0.1
      */
     @Override
@@ -173,11 +186,16 @@ public class File implements IFile{
             bufferedReader.close();
             return lines.toArray(new String[lines.size()]);
         } catch (Exception exception) {
-            // TODO: logging
+            logger.log(LogLevel.FATAL, "readAllStringArr", exception.getMessage());
         }
         return new String[0];
     }
-
+    /**
+     * Attempts to get a exclusive lock on a file. If that fails then the file is in use otherwise it is not.
+     * @return Returns a bool if file is in use.
+     * @version 0.1.1
+     * @since 0.1
+     */
     @Override
     public Boolean isInUse() {
         try (
@@ -191,8 +209,8 @@ public class File implements IFile{
             } else {
                 return true;
             }
-        } catch (Exception e) {
-            // TODO: logging
+        } catch (Exception exception) {
+            logger.log(LogLevel.FATAL, "isInUse", exception.getMessage());
         }
         return null;
     }
