@@ -15,6 +15,7 @@ public class ApiHandler implements IApiHandler{
     ArrayList<IRequestObject> requestQueue = new ArrayList<>();
     ArrayList<IResponseObject> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
+    @Override
     public ResponseObject post(IRequestObject requestObject) {
         try {
             Stopwatch stopwatch = new Stopwatch();
@@ -55,7 +56,7 @@ public class ApiHandler implements IApiHandler{
             return null;
         }
     }
-
+    @Override
     public void executeQueue() {
         Stopwatch stopwatch = new Stopwatch();
         for (IRequestObject requestObject : requestQueue) {
@@ -65,27 +66,27 @@ public class ApiHandler implements IApiHandler{
         stopwatch.stop();
         totalQueueMillis = stopwatch.getElapsedMillis();
     }
-
+    @Override
     public void addToQueue(IRequestObject requestObject) {
         requestQueue.add(requestObject);
     }
-
+    @Override
     public void removeLastFromQueue() {
         requestQueue.remove(requestQueue.size() -1);
     }
-
+    @Override
     public void removeFirstFromQueue() {
         requestQueue.remove(0);
     }
-
+    @Override
     public void removeIndexFromQueue(int i) {
         requestQueue.remove(i);
     }
-
+    @Override
     public ArrayList<IRequestObject> getRequestQueue() {
         return requestQueue;
     }
-
+    @Override
     public ArrayList<IResponseObject> getResponsesToQueue() {
         return responsesToQueue;
     }

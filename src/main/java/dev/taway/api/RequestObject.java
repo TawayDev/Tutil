@@ -2,8 +2,6 @@ package dev.taway.api;
 
 import org.json.simple.JSONObject;
 
-import java.util.Iterator;
-
 public class RequestObject implements IRequestObject{
     JSONObject headers;
     JSONObject body;

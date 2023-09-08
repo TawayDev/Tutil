@@ -7,11 +7,11 @@ public class ResponseObject implements IResponseObject {
     JSONObject bodyParsed;
     String bodyOriginal;
     int statusCode;
-    double responseTime;
+    long responseTime;
 
     boolean treatBodyAsJson;
 
-    public ResponseObject(IRequestObject requestObject, JSONObject headers, JSONObject bodyParsed, String bodyOriginal, int statusCode, double responseTime, boolean treatBodyAsJson) {
+    public ResponseObject(IRequestObject requestObject, JSONObject headers, JSONObject bodyParsed, String bodyOriginal, int statusCode, long responseTime, boolean treatBodyAsJson) {
         this.requestObject = requestObject;
         this.headers = headers;
         this.bodyParsed = bodyParsed;
@@ -42,7 +42,7 @@ public class ResponseObject implements IResponseObject {
         return statusCode;
     }
     @Override
-    public double getResponseTime() {
+    public long getResponseTime() {
         return responseTime;
     }
 }

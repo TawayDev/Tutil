@@ -1,6 +1,6 @@
 package dev.taway.file;
-/***
- * A simple wrapper for java.io.File
+/**
+ * A simple wrapper for {@link java.io.File}. Handles one file at a time.
  * @since 0.1
  */
 public interface IFile {
@@ -20,7 +20,7 @@ public interface IFile {
      * @since 0.1
      * */
     void deleteOnExit();
-    /** File? What file?
+    /** Deletes a file on JVM exit (normal exit, not crash). This action cannot be reverted.
      * @return Returns true if the file exist.
      * @since 0.1
      * */
@@ -47,18 +47,18 @@ public interface IFile {
      * */
     String[] readAllAsStringArr();
 
-    /***
+    /**
      * Attempts to get a exclusive lock on a file. If that fails then the file is in use otherwise it is not.
      * @return Returns a bool if file is in use.
      * @since 0.1
      */
     Boolean isInUse();
-    /***
+    /**
      * @return Returns absolute path of the file.
      * @since 0.1
      */
     String getAbsolutePath();
-    /***
+    /**
      * @return Returns inputted path (the one you put into the constructor)
      * @since 0.1
      */
