@@ -1,4 +1,4 @@
-package dev.taway.file;
+package dev.taway.io.file;
 
 import org.junit.jupiter.api.*;
 import java.io.IOException;
@@ -10,7 +10,7 @@ class FileTest {
     String path = "./testFile.txt";
     @AfterEach
     void tearDown() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
         if(!f.delete()) {
             System.out.println("After test cleanup FAILURE! canRead=" + f.canRead() + " canWrite=" + f.canWrite() + " canExecute=" + f.canExecute() + " inUse=" + file.isInUse());
@@ -19,7 +19,7 @@ class FileTest {
 
     @Test
     void create() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         file.create();
@@ -28,7 +28,7 @@ class FileTest {
 
     @Test
     void delete() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         if(!f.exists()) file.create();
@@ -38,7 +38,7 @@ class FileTest {
 
     @Test
     void exists() throws IOException {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         if(!f.exists()) f.createNewFile();
@@ -47,7 +47,7 @@ class FileTest {
 
     @Test
     void overwrite() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         file.create();
@@ -58,7 +58,7 @@ class FileTest {
 
     @Test
     void append() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         file.create();
@@ -70,7 +70,7 @@ class FileTest {
 
     @Test
     void readAllAsString() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         file.create();
@@ -82,7 +82,7 @@ class FileTest {
 
     @Test
     void readAllAsStringArr() {
-        dev.taway.file.File file = new File(path);
+        File file = new File(path);
         java.io.File f = new java.io.File(path);
 
         file.create();

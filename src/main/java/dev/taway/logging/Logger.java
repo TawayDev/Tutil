@@ -1,9 +1,15 @@
 package dev.taway.logging;
 
 import dev.taway.RuntimeConfig;
-import dev.taway.file.File;
+import dev.taway.io.file.File;
 import dev.taway.time.Formatter;
 
+/**
+ * Object used for logging to console and or files. Behavior can be configured in {@link dev.taway.RuntimeConfig}
+ * @since 0.1.1
+ * @see LogLevel
+ * @see RuntimeConfig
+ */
 public class Logger {
     String className;
     File file;

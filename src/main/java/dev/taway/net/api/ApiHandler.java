@@ -1,4 +1,4 @@
-package dev.taway.api;
+package dev.taway.net.api;
 
 import dev.taway.logging.LogLevel;
 import dev.taway.logging.Logger;
@@ -18,6 +18,15 @@ public class ApiHandler implements IApiHandler{
     ArrayList<IResponseObject> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
     Logger logger = new Logger("ApiHandler");
+
+    /**
+     * Sends RequestObject to api endpoint and returns ResponseObject.
+     * @param requestObject Object representation of a request.
+     * @return Returns object representation of the response.
+     * @since 0.1
+     * @see dev.taway.net.api.RequestObject RequestObject
+     * @see dev.taway.net.api.ResponseObject ResponseObject
+     */
     @Override
     public ResponseObject post(IRequestObject requestObject) {
         try {
@@ -58,8 +67,18 @@ public class ApiHandler implements IApiHandler{
             return null;
         }
     }
+    /**
+     * Runs entire {@link IRequestObject} Queue one by one and stores their responses in ResponsesToQueue ArrayList
+     * @version 0.1.2
+     * @since 0.1
+     * @see #addToQueue(IRequestObject)
+     */
     @Override
     public void executeQueue() {
+        if (requestQueue.size() == 0) {
+            logger.log(LogLevel.WARN, "executeQueue", "Request queue is empty!");
+            return;
+        }
         Stopwatch stopwatch = new Stopwatch();
         for (IRequestObject requestObject : requestQueue) {
             responsesToQueue.add(post(requestObject));
@@ -68,26 +87,53 @@ public class ApiHandler implements IApiHandler{
         stopwatch.stop();
         totalQueueMillis = stopwatch.getElapsedMillis();
     }
+    /**
+     * Adds {@link IRequestObject} to RequestQueue.
+     * @param requestObject Object to be added.
+     * @since 0.1
+     * @see dev.taway.net.api.RequestObject RequestObject
+     */
     @Override
     public void addToQueue(IRequestObject requestObject) {
         requestQueue.add(requestObject);
     }
+    /**
+     * Removes last {@link IRequestObject} from RequestQueue.
+     * @since 0.1
+     */
     @Override
     public void removeLastFromQueue() {
         requestQueue.remove(requestQueue.size() -1);
     }
+    /**
+     * Removes first RequestObject from RequestQueue.
+     * @since 0.1
+     */
     @Override
     public void removeFirstFromQueue() {
         requestQueue.remove(0);
     }
+    /**
+     * Removes {@link IRequestObject} from queue at position i.
+     * @param i Position in array.
+     * @since 0.1
+     */
     @Override
     public void removeIndexFromQueue(int i) {
         requestQueue.remove(i);
     }
+    /**
+     * @return Returns RequestQueue
+     * @since 0.1
+     */
     @Override
     public ArrayList<IRequestObject> getRequestQueue() {
         return requestQueue;
     }
+    /**
+     * @return Returns ArrayList of responses to RequestQueue
+     * @since 0.1
+     */
     @Override
     public ArrayList<IResponseObject> getResponsesToQueue() {
         return responsesToQueue;

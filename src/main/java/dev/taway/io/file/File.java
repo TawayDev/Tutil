@@ -1,5 +1,6 @@
-package dev.taway.file;
+package dev.taway.io.file;
 
+import dev.taway.io.IOChecker;
 import dev.taway.logging.LogLevel;
 import dev.taway.logging.Logger;
 
@@ -17,8 +18,9 @@ public class File implements IFile{
 
     String absolutePath;
     String path;
-    Logger logger = new Logger("File");
+    static Logger logger = new Logger("File");
     public File(String path) {
+        if (!IOChecker.pathIsFile(path)) logger.log(LogLevel.FATAL, "Constructor", "Path \"" + path + "\" is not a valid file path.");
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;
