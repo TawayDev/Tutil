@@ -17,7 +17,7 @@ public class ApiHandler implements IApiHandler{
     ArrayList<IRequestObject> requestQueue = new ArrayList<>();
     ArrayList<IResponseObject> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
-    Logger logger = new Logger("ApiHandler");
+    static Logger logger = new Logger("ApiHandler");
 
     /**
      * Sends RequestObject to api endpoint and returns ResponseObject.

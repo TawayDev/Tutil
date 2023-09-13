@@ -13,6 +13,8 @@ It's very well documented :D
 - TIME
   - Time formatting
   - Stopwatch
+- SORTING
+  - Bubble sort (integer only)
 - CRYPTO
   - Caesar cipher
 
@@ -20,8 +22,6 @@ It's very well documented :D
 <b>NOTE:</b> This doesn't mean that all of these features will make it into the library but rather that it is on my mind to attempt adding them.
 - More I/O features
   - JSON/YAML/XML Parsing
-- Sorting algorithms
-  - Bubble sort
 - More networking features
   - HTTP server and client
   - TCP/UDP socket
