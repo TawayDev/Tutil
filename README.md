@@ -8,6 +8,7 @@ It's very well documented :D
 - IO
   - File management
   - Directory management
+  - JSON serialization and deserialization
 - NET
   - Send a POST request to API
 - TIME
@@ -21,7 +22,7 @@ It's very well documented :D
 ## Planned
 <b>NOTE:</b> This doesn't mean that all of these features will make it into the library but rather that it is on my mind to attempt adding them.
 - More I/O features
-  - JSON/YAML/XML Parsing
+  - YAML/XML Serialization and deserialization
 - More networking features
   - HTTP server and client
   - TCP/UDP socket

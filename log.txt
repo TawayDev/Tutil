@@ -1,0 +1,15 @@
+
+[02:11 17.09.2023] [ERROR] [JsonObject.stringToJsonObject] Could not convert String to JsonObject as it's not empty and currently contains data.
+[03:42 17.09.2023] [ERROR] [JsonObject.stringToJsonObject] Could not convert String to JsonObject as it's not empty and currently contains data.
+[04:52 17.09.2023] [ERROR] [JsonObject.stringToJsonObject] Could not convert String to JsonObject as it's not empty and currently contains data.
+[04:52 17.09.2023] [ERROR] [JsonObject.stringToJsonObject] Could not convert String to JsonObject as it's not empty and currently contains data.
+[10:14 17.09.2023] [ERROR] [JsonObject.stringToJsonObject] Could not convert String to JsonObject as it's not empty and currently contains data.
+[10:42 17.09.2023] [ERROR] [JsonObject.deserializeJsonFromFile] Could not convert file to JsonObject as it's not empty and currently contains data.
+[10:47 17.09.2023] [ERROR] [JsonObject.deserializeJsonFromFile] Could not convert file to JsonObject as it's not empty and currently contains data.
+[10:47 17.09.2023] [WARN] [JsonObject.getJsonObject] Returning new JsonObject because the one held is null.
+[10:48 17.09.2023] [FATAL] [File.readAllAsString] C:\Users\Myste\IdeaProjects\Tutil\.\test\java\dev\taway\io\json\testRead.json (The system cannot find the path specified)
+[10:59 17.09.2023] [ERROR] [JsonObject.serializeJsonToFile] Cannot invoke "org.json.simple.JSONObject.isEmpty()" because "this.jsonObject" is null
+[11:00 17.09.2023] [ERROR] [JsonObject.serializeJsonToFile] Could not convert JsonObject to file as it's empty and currently contains no data.
+[11:02 17.09.2023] [FATAL] [File.create] The system cannot find the path specified
+[11:03 17.09.2023] [FATAL] [File.create] The system cannot find the path specified
+[11:12 17.09.2023] [FATAL] [File.create] The system cannot find the path specified
