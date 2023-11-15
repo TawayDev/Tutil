@@ -10,6 +10,7 @@ import java.util.TimeZone;
 public class Formatter {
     /**
      * Formats a timestamp according to format and timezone that is defined in {@link dev.taway.RuntimeConfig.TIME}
+     *
      * @param timestamp
      * @return Returns inputted timestamp formatted as string.
      * @see System#nanoTime()
@@ -24,9 +25,10 @@ public class Formatter {
 
     /**
      * Formats a timestamp according to inputted format and timezone.
+     *
      * @param timestamp
      * @param timeFormat Time format (E.g. hh:mm dd.MM.yyyy)
-     * @param timeZone Timezone code (E.g CET)
+     * @param timeZone   Timezone code (E.g CET)
      * @return Returns inputted timestamp formatted as string.
      * @see System#nanoTime()
      * @see <a href="https://docs.oracle.com/javase/8/docs/api/java/text/SimpleDateFormat.html">Java documentation - SimpleDateFormat</a>

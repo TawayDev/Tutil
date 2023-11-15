@@ -1,9 +1,15 @@
 package dev.taway.io.directory;
 
+import java.io.IOException;
+
 public interface IDirectory {
-    boolean create();
-    boolean delete();
-    boolean safeDelete();
+    boolean create() throws IOException;
+
+    boolean delete() throws IOException;
+
+    boolean safeDelete() throws IOException;
+
     boolean exists();
-    boolean isEmpty();
+
+    boolean isEmpty() throws IOException;
 }

@@ -3,23 +3,30 @@ package dev.taway.io.directory;
 import dev.taway.io.file.File;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.io.IOException;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DirectoryTest {
     Directory dir = new Directory("./testDir/");
+
+    DirectoryTest() throws IOException {
+    }
+
     @Test
-    void create() {
+    void create() throws IOException {
         assertTrue(dir.create());
     }
 
     @Test
-    void delete() {
+    void delete() throws IOException {
         dir.create();
         assertTrue(dir.delete());
     }
 
     @Test
-    void safeDelete() {
+    void safeDelete() throws IOException {
         dir.create();
         File file = new File("./testDir/file.txt");
         file.create();
@@ -29,14 +36,14 @@ class DirectoryTest {
     }
 
     @Test
-    void exists() {
+    void exists() throws IOException {
         dir.create();
         assertTrue(dir.exists());
         dir.delete();
     }
 
     @Test
-    void isEmpty() {
+    void isEmpty() throws IOException {
         dir.create();
         File file = new File("./testDir/file.txt");
         file.create();

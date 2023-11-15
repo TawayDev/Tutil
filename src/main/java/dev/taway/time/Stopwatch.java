@@ -5,7 +5,9 @@ public class Stopwatch {
     long endMillis;
     long elapsedMillis;
 
-    public Stopwatch() {}
+    public Stopwatch() {
+    }
+
     public void start() {
         startMillis = System.nanoTime();
     }

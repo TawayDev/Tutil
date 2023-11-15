@@ -3,16 +3,18 @@ package dev.taway.net.api;
 import org.json.simple.JSONObject;
 
 /**
- A object representation of a http request. Used by {@link ApiHandler}
- * @since 0.1
+ * An object representation of a http request. Used by {@link ApiHandler}
+ *
  * @see dev.taway.net.api.ApiHandler#post(IRequestObject)
- * @see dev.taway.net.api.ApiHandler#addToQueue(IRequestObject) 
+ * @see dev.taway.net.api.ApiHandler#addToQueue(IRequestObject)
+ * @since 0.1
  */
-public class RequestObject implements IRequestObject{
+public class RequestObject implements IRequestObject {
     JSONObject headers;
     JSONObject body;
     String destination;
     boolean parseBodyAsJSON;
+
     public RequestObject(JSONObject headers, JSONObject body, String destination) {
         this.headers = headers;
         this.body = body;
@@ -21,6 +23,7 @@ public class RequestObject implements IRequestObject{
 
     /**
      * Gets {@link org.json.simple.JSONObject} with all the headers.
+     *
      * @return JSONObject of headers.
      * @since 0.1
      */
@@ -28,6 +31,7 @@ public class RequestObject implements IRequestObject{
     public JSONObject getHeaders() {
         return headers;
     }
+
     /***
      * Gets {@link org.json.simple.JSONObject} of body.
      * @return
@@ -37,8 +41,10 @@ public class RequestObject implements IRequestObject{
     public JSONObject getBody() {
         return body;
     }
+
     /**
      * URI that the request is sent to.
+     *
      * @return Destination to which this request is sent to.
      * @since 0.1
      */
@@ -46,8 +52,10 @@ public class RequestObject implements IRequestObject{
     public String getDestination() {
         return destination;
     }
+
     /**
      * Boolean which determines if the response body should be treated and parsed as JSON.
+     *
      * @return A boolean.
      * @since 0.1
      */

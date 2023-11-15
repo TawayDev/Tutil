@@ -1,6 +1,8 @@
 package dev.taway.io.file;
 
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Test;
+
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,17 +10,18 @@ import static org.junit.jupiter.api.Assertions.*;
 class FileTest {
 
     String path = "./testFile.txt";
+
     @AfterEach
-    void tearDown() {
+    void tearDown() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
-        if(!f.delete()) {
+        if (!f.delete()) {
             System.out.println("After test cleanup FAILURE! canRead=" + f.canRead() + " canWrite=" + f.canWrite() + " canExecute=" + f.canExecute() + " inUse=" + file.isInUse());
         }
     }
 
     @Test
-    void create() {
+    void create() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
@@ -27,11 +30,11 @@ class FileTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
-        if(!f.exists()) file.create();
+        if (!f.exists()) file.create();
         file.delete();
         assertFalse(file.exists());
     }
@@ -41,12 +44,12 @@ class FileTest {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
-        if(!f.exists()) f.createNewFile();
+        if (!f.exists()) f.createNewFile();
         assertTrue(file.exists());
     }
 
     @Test
-    void overwrite() {
+    void overwrite() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
@@ -57,7 +60,7 @@ class FileTest {
     }
 
     @Test
-    void append() {
+    void append() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
@@ -69,7 +72,7 @@ class FileTest {
     }
 
     @Test
-    void readAllAsString() {
+    void readAllAsString() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 
@@ -81,7 +84,7 @@ class FileTest {
     }
 
     @Test
-    void readAllAsStringArr() {
+    void readAllAsStringArr() throws IOException {
         File file = new File(path);
         java.io.File f = new java.io.File(path);
 

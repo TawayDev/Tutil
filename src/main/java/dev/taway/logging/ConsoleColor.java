@@ -2,10 +2,11 @@ package dev.taway.logging;
 
 /**
  * Enum of all console colors and background.
+ *
  * @since 0.1.1
  */
 public enum ConsoleColor {
-// Colors yoinked from https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
+    // Colors yoinked from https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println
     // Reset
     RESET("\033[0m"),  // Text Reset
 

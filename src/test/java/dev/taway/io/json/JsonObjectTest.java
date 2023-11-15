@@ -1,15 +1,17 @@
 package dev.taway.io.json;
 
-import dev.taway.io.file.File;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.util.HashMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class JsonObjectTest {
     JsonObject jsonObject;
+
     @Test
     void hashMapToJsonObject() {
         JSONObject jO = new JSONObject();
@@ -26,7 +28,7 @@ class JsonObjectTest {
     }
 
     @Test
-    void stringToJsonObject() {
+    void stringToJsonObject() throws ParseException {
         jsonObject = new JsonObject();
         jsonObject.stringToJsonObject("{\"one\":\"one\",\"two\":2}", true);
 
@@ -34,7 +36,7 @@ class JsonObjectTest {
     }
 
     @Test
-    void deserializeJsonFromFile() {
+    void deserializeJsonFromFile() throws IOException, ParseException {
         jsonObject = new JsonObject();
         jsonObject.deserializeJsonFromFile("./src/test/java/dev/taway/io/json/testRead.json", true);
 
@@ -42,7 +44,7 @@ class JsonObjectTest {
     }
 
     @Test
-    void serializeJsonToFile() {
+    void serializeJsonToFile() throws IOException, ParseException {
 //        File file = new File("./src/test/java/dev/taway/io/json/testWrite.json");
 //        file.create();
 //        file.overwrite("{\n\"one\":\"one\",\n\"two\":2\n}");

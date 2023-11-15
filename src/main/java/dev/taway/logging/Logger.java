@@ -4,11 +4,14 @@ import dev.taway.RuntimeConfig;
 import dev.taway.io.file.File;
 import dev.taway.time.Formatter;
 
+import java.io.IOException;
+
 /**
  * Object used for logging to console and or files. Behavior can be configured in {@link dev.taway.RuntimeConfig}
- * @since 0.1.1
+ *
  * @see LogLevel
  * @see RuntimeConfig
+ * @since 0.1.1
  */
 public class Logger {
     String className;
@@ -16,46 +19,49 @@ public class Logger {
 
     /**
      * Creates a logger object for the specified class. Logs into a file which is specified in {@link dev.taway.RuntimeConfig.LOGGING}.
+     *
      * @param className Class name for which this logger exists.
      * @since 0.1.1
      */
-    public Logger(String className) {
+    public Logger(String className) throws IOException {
         this.className = className;
         file = new File(RuntimeConfig.LOGGING.logFilePath);
     }
 
     /**
      * Creates a logger object for the specified class.
+     *
      * @param className Class name for which this logger exists.
-     * @param logPath Custom logging file path.
+     * @param logPath   Custom logging file path.
      * @since 0.1.1
      */
-    public Logger(String className, String logPath) {
+    public Logger(String className, String logPath) throws IOException {
         this.className = className;
         file = new File(logPath);
     }
 
     /**
      * Logs to console and to a file. You can customise console and file logging format in {@link dev.taway.RuntimeConfig.LOGGING}
+     *
      * @param logLevel Severity of the log.
-     * @param method Method from which this method was called from.
-     * @param text Message to be logged.
+     * @param method   Method from which this method was called from.
+     * @param text     Message to be logged.
      */
-    public void log(LogLevel logLevel, String method, String text) {
+    public void log(LogLevel logLevel, String method, String text) throws IOException {
         toFile(logLevel, method, text);
         toConsole(logLevel, method, text);
         if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
     }
 
-    private void toFile(LogLevel logLevel, String method, String text) {
+    private void toFile(LogLevel logLevel, String method, String text) throws IOException {
         if (logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) return;
         file.append(RuntimeConfig.LOGGING.fileLogFormat
-                .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
-                .replace("{LEVEL}", logLevel.NAME)
-                .replace("{CLASS}", className)
-                .replace("{METHOD}", method)
-                .replace("{MESSAGE}", text)
-        , true);
+                        .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
+                        .replace("{LEVEL}", logLevel.NAME)
+                        .replace("{CLASS}", className)
+                        .replace("{METHOD}", method)
+                        .replace("{MESSAGE}", text)
+                , true);
     }
 
     private void toConsole(LogLevel logLevel, String method, String text) {

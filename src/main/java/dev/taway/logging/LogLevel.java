@@ -2,13 +2,14 @@ package dev.taway.logging;
 
 /**
  * Used by {@link dev.taway.logging.Logger}
- * @since 0.1.1
+ *
  * @see dev.taway.logging.Logger#log(LogLevel, String, String)
  * @see dev.taway.RuntimeConfig RuntimeConfig
+ * @since 0.1.1
  */
 public enum LogLevel {
     DEBUG(0, "DEBUG", ConsoleColor.WHITE.COLOR),
-    INFO(1,"INFO", ""),
+    INFO(1, "INFO", ""),
     WARN(2, "WARN", ConsoleColor.YELLOW.COLOR),
     ERROR(3, "ERROR", ConsoleColor.RED.COLOR),
     FATAL(4, "FATAL", ConsoleColor.PURPLE.COLOR);
