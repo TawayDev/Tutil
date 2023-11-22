@@ -1,5 +1,9 @@
 package dev.taway.io.directory;
 
+import dev.taway.exception.io.DirectoryException;
+import dev.taway.io.IOChecker;
+import lombok.SneakyThrows;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -11,8 +15,9 @@ public class Directory implements IDirectory {
     String path;
     Path pPath;
 
-    public Directory(String path) throws IOException {
-//        if (!IOChecker.pathIsDirectory(path)) logger.log(LogLevel.FATAL, "Constructor", "Path \"" + path + "\" is not a valid directory path.");
+    @SneakyThrows
+    public Directory(String path) {
+        if (!IOChecker.pathIsDirectory(path)) throw new DirectoryException("Path \"" + path + "\" is not a valid directory path.");
         File file = new File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;
@@ -54,8 +59,6 @@ public class Directory implements IDirectory {
     @Override
     public boolean safeDelete() throws IOException {
         if (!isEmpty()) {
-//            TODO: add custom exception
-//            logger.log(LogLevel.ERROR, "safeDelete", "Directory could not be deleted because it is not empty.");
             return false;
         }
         return Files.deleteIfExists(pPath);

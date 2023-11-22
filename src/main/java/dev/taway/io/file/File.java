@@ -1,5 +1,9 @@
 package dev.taway.io.file;
 
+import dev.taway.exception.io.FileException;
+import dev.taway.io.IOChecker;
+import lombok.SneakyThrows;
+
 import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
@@ -15,9 +19,9 @@ public class File implements IFile {
     String absolutePath;
     String path;
 
+    @SneakyThrows
     public File(String path) throws IOException {
-//        TODO: Custom exception
-//        if (!IOChecker.pathIsFile(path)) logger.log(LogLevel.FATAL, "Constructor", "Path \"" + path + "\" is not a valid file path.");
+        if (!IOChecker.pathIsFile(path)) throw new FileException("Path \"" + path + "\" is not a valid file path.");
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;
@@ -159,11 +163,11 @@ public class File implements IFile {
             lines.add(line);
         }
         bufferedReader.close();
-        return lines.toArray(new String[lines.size()]);
+        return lines.toArray(new String[0]);
     }
 
     /**
-     * Attempts to get a exclusive lock on a file. If that fails then the file is in use otherwise it is not.
+     * Attempts to get an exclusive lock on a file. If that fails then the file is in use otherwise it is not.
      *
      * @return Returns a bool if file is in use.
      * @version 0.1.1

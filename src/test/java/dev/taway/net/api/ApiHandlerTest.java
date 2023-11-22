@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled("API Key and Destination not provided due to security reasons of my own API.")
+@Disabled("API Key and Destination not provided due to security reasons.")
 class ApiHandlerTest {
     ApiHandler apiHandler = new ApiHandler();
 

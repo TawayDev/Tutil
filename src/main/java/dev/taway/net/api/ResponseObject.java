@@ -28,7 +28,7 @@ public class ResponseObject implements IResponseObject {
         this.responseTime = responseTime;
         this.treatBodyAsJson = treatBodyAsJson;
     }
-
+//region BoilerPlate
     /**
      * @return Original {@link IRequestObject} that was used.
      * @since 0.1
@@ -88,4 +88,5 @@ public class ResponseObject implements IResponseObject {
     public long getResponseTime() {
         return responseTime;
     }
+//endregion
 }

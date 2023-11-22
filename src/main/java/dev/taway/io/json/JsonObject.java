@@ -1,13 +1,14 @@
 package dev.taway.io.json;
 
+import dev.taway.exception.io.JsonObjectException;
 import dev.taway.io.file.File;
+import lombok.SneakyThrows;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Object used for storing, serialising and deserializing JSON data. <br>
@@ -35,18 +36,15 @@ public class JsonObject {
      * @see #getJsonObject()
      * @since 0.1.4
      */
+    @SneakyThrows
     public void hashMapToJsonObject(HashMap<String, Object> data, boolean clearObject) {
         if (clearObject) jsonObject = null;
         if (jsonObject == null) {
             jsonObject = new JSONObject();
-            for (Map.Entry<String, Object> set : data.entrySet()) {
-                jsonObject.put(set.getKey(), set.getValue());
-            }
+            jsonObject.putAll(data);
+        } else {
+            throw new JsonObjectException("Could not convert HashMap to JsonObject as it's not empty and currently contains data.");
         }
-//        } else {
-////            logger.log(LogLevel.ERROR, "hashMapToJsonObject", "Could not convert HashMap to JsonObject as it's not empty and currently contains data.");
-////            TODO: throw custom error
-//        }
     }
 
     /**
@@ -57,15 +55,15 @@ public class JsonObject {
      * @see #getJsonObject()
      * @since 0.1.4
      */
+    @SneakyThrows
     public void stringToJsonObject(String jsonString, boolean clearObject) throws ParseException {
         if (clearObject) jsonObject = null;
         if (jsonObject == null) {
             JSONParser jsonParser = new JSONParser();
             jsonObject = (JSONObject) jsonParser.parse(jsonString);
+        } else {
+            throw new JsonObjectException("Could not convert String to JsonObject as it's not empty and currently contains data.");
         }
-//        } else {
-//            logger.log(LogLevel.ERROR, "stringToJsonObject", "Could not convert String to JsonObject as it's not empty and currently contains data.");
-//        }
     }
 
     /**
@@ -76,17 +74,16 @@ public class JsonObject {
      * @see #getJsonObject()
      * @since 0.1.4
      */
+    @SneakyThrows
     public void deserializeJsonFromFile(String path, boolean clearObject) throws IOException, ParseException {
         if (clearObject) jsonObject = null;
         if (jsonObject == null) {
             File file = new File(path);
             String jsonString = file.readAllAsString();
             stringToJsonObject(jsonString, true);
+        } else {
+            throw new JsonObjectException("Could not convert file to JsonObject as it's not empty and currently contains data.");
         }
-//        } else {
-////            TODO: throw custom exception
-//            logger.log(LogLevel.ERROR, "deserializeJsonFromFile", "Could not convert file to JsonObject as it's not empty and currently contains data.");
-//        }
     }
 
     /**
@@ -96,16 +93,15 @@ public class JsonObject {
      * @param clearObject Determines if the JsonObject should be cleared after writing it into a file.
      * @since 0.1.4
      */
+    @SneakyThrows
     public void serializeJsonToFile(String path, boolean clearObject) throws IOException {
         if (jsonObject != null) {
             File file = new File(path);
             file.create();
             file.overwrite(jsonObject.toJSONString());
+        } else {
+            throw new JsonObjectException("Could not convert JsonObject to file as it's empty and currently contains no data.");
         }
-//        } else {
-//            logger.log(LogLevel.ERROR, "serializeJsonToFile", "Could not convert JsonObject to file as it's empty and currently contains no data.");
-//        }
-//        TODO: custom exception
         if (clearObject) jsonObject = null;
     }
 
@@ -116,11 +112,6 @@ public class JsonObject {
      * @since 0.1.4
      */
     public JSONObject getJsonObject() {
-//        if (jsonObject == null) {
-////            TODO: throw custom error
-//            logger.log(LogLevel.WARN, "getJsonObject", "Returning new JsonObject because the one held is null.");
-//            return new JSONObject();
-//        }
         return jsonObject;
     }
 

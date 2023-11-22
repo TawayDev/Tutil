@@ -1,5 +1,6 @@
 package dev.taway.net.api;
 
+import lombok.Getter;
 import org.json.simple.JSONObject;
 
 /**
@@ -9,6 +10,7 @@ import org.json.simple.JSONObject;
  * @see dev.taway.net.api.ApiHandler#addToQueue(IRequestObject)
  * @since 0.1
  */
+@Getter
 public class RequestObject implements IRequestObject {
     JSONObject headers;
     JSONObject body;

@@ -14,17 +14,13 @@ class JsonObjectTest {
 
     @Test
     void hashMapToJsonObject() {
-        JSONObject jO = new JSONObject();
-        jO.put("one", "one");
-        jO.put("two", 2);
-
         HashMap<String, Object> jsonHashMap = new HashMap<>();
         jsonHashMap.put("one", "one");
         jsonHashMap.put("two", 2);
 
         jsonObject = new JsonObject();
         jsonObject.hashMapToJsonObject(jsonHashMap, true);
-        assertEquals(jO.toJSONString(), jsonObject.getJsonObject().toJSONString());
+        assertEquals("{\"two\":2,\"one\":\"one\"}", jsonObject.getJsonObject().toJSONString());
     }
 
     @Test
