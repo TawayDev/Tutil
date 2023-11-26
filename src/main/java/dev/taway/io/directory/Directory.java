@@ -1,7 +1,7 @@
 package dev.taway.io.directory;
 
 import dev.taway.exception.io.DirectoryException;
-import dev.taway.io.IOChecker;
+import dev.taway.io.PathChecker;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -17,7 +17,8 @@ public class Directory implements IDirectory {
 
     @SneakyThrows
     public Directory(String path) {
-        if (!IOChecker.pathIsDirectory(path)) throw new DirectoryException("Path \"" + path + "\" is not a valid directory path.");
+        if (!PathChecker.pathIsDirectory(path))
+            throw new DirectoryException("Path \"" + path + "\" is not a valid directory path.");
         File file = new File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;

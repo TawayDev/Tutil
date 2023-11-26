@@ -5,12 +5,12 @@ import org.json.simple.JSONObject;
 /**
  * Object representation of a {@link ApiHandler} response.
  *
- * @see dev.taway.net.api.ApiHandler#post(IRequestObject)
+ * @see dev.taway.net.api.ApiHandler#post(IRequest)
  * @see ApiHandler#getResponsesToQueue()
  * @since 0.1
  */
-public class ResponseObject implements IResponseObject {
-    IRequestObject requestObject;
+public class Response implements IResponse {
+    IRequest requestObject;
     JSONObject headers;
     JSONObject bodyParsed;
     String bodyOriginal;
@@ -19,7 +19,7 @@ public class ResponseObject implements IResponseObject {
 
     boolean treatBodyAsJson;
 
-    public ResponseObject(IRequestObject requestObject, JSONObject headers, JSONObject bodyParsed, String bodyOriginal, int statusCode, long responseTime, boolean treatBodyAsJson) {
+    public Response(IRequest requestObject, JSONObject headers, JSONObject bodyParsed, String bodyOriginal, int statusCode, long responseTime, boolean treatBodyAsJson) {
         this.requestObject = requestObject;
         this.headers = headers;
         this.bodyParsed = bodyParsed;
@@ -29,12 +29,13 @@ public class ResponseObject implements IResponseObject {
         this.treatBodyAsJson = treatBodyAsJson;
     }
 //region BoilerPlate
+
     /**
-     * @return Original {@link IRequestObject} that was used.
+     * @return Original {@link IRequest} that was used.
      * @since 0.1
      */
     @Override
-    public IRequestObject getRequestObject() {
+    public IRequest getRequestObject() {
         return requestObject;
     }
 
@@ -65,7 +66,7 @@ public class ResponseObject implements IResponseObject {
      * @since 0.1
      */
     @Override
-    public String getBodyOriginal() {
+    public String getBody() {
         return bodyOriginal;
     }
 

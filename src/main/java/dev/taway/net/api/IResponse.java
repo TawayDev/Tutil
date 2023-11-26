@@ -3,14 +3,14 @@ package dev.taway.net.api;
 import org.json.simple.JSONObject;
 
 
-public interface IResponseObject {
-    IRequestObject getRequestObject();
+public interface IResponse {
+    IRequest getRequestObject();
 
     JSONObject getHeaders();
 
     JSONObject getBodyParsed();
 
-    String getBodyOriginal();
+    String getBody();
 
     int getStatusCode();
 

@@ -1,5 +1,6 @@
 package dev.taway.net.api;
 
+import dev.taway.exception.net.api.APIHandlerException;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Disabled;
@@ -8,42 +9,87 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@Disabled("API Key and Destination not provided due to security reasons.")
 class ApiHandlerTest {
     ApiHandler apiHandler = new ApiHandler();
+    JSONObject headers = new JSONObject();
 
-    //    FOR SECURITY REASONS DELETED INFO! (trust me it works 😎)
-    String key = "";
-    String destination = "";
-
-    RequestObject getRequestObject() {
-        JSONObject headers = new JSONObject();
-        headers.put("KEY", key);
-        JSONObject body = new JSONObject();
-        body.put("KEY_TYPE", "API");
-        body.put("ACTION", "LOGIN");
-        body.put("IP", "127.0.0.1,19687");
-        body.put("USERNAME", "MysteriousTaway");
-        body.put("UUID", "649266d7-bd82-4952-bd40-03e000c79e8e");
-        body.put("OP", true);
-        return new RequestObject(headers, body, destination);
+    @Test
+    public void testGetRequest() throws Exception {
+        IRequest getRequest = new Request(RequestType.GET, headers, null, "https://jsonplaceholder.typicode.com/posts");
+        Response response = apiHandler.sendRequest(getRequest);
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(response.getBody());
     }
 
     @Test
-    void post() throws IOException, ParseException, InterruptedException {
-        ResponseObject responseObject = apiHandler.post(getRequestObject());
-        assertEquals("{\"STATUS\":\"OK\",\"BANNED\":false,\"REASON\":\"none\",\"BAN_DATE\":\"none\"}", responseObject.bodyOriginal);
+    public void testPostRequest() throws Exception {
+        JSONObject postData = new JSONObject();
+        postData.put("title", "foo");
+        postData.put("body", "bar");
+        postData.put("userId", 1);
+
+        IRequest postRequest = new Request(RequestType.POST, headers, postData, "https://jsonplaceholder.typicode.com/posts");
+        Response response = apiHandler.sendRequest(postRequest);
+        assertEquals(201, response.getStatusCode());
+        assertNotNull(response.getBody());
     }
 
     @Test
-    void executeQueue() throws IOException, ParseException, InterruptedException {
-        apiHandler.addToQueue(getRequestObject());
-        apiHandler.addToQueue(getRequestObject());
-        apiHandler.executeQueue();
-        ArrayList<IResponseObject> responses = apiHandler.getResponsesToQueue();
-        String responseString = responses.get(0).getBodyOriginal() + responses.get(1).getBodyOriginal();
-        assertEquals("{\"STATUS\":\"OK\",\"BANNED\":false,\"REASON\":\"none\",\"BAN_DATE\":\"none\"}{\"STATUS\":\"OK\",\"BANNED\":false,\"REASON\":\"none\",\"BAN_DATE\":\"none\"}", responseString);
+    public void testPutRequest() throws Exception {
+        JSONObject putData = new JSONObject();
+        putData.put("id", 1);
+        putData.put("title", "foo");
+        putData.put("body", "bar");
+        putData.put("userId", 1);
+
+        IRequest putRequest = new Request(RequestType.PUT, headers, putData, "https://jsonplaceholder.typicode.com/posts/1");
+        Response response = apiHandler.sendRequest(putRequest);
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(response.getBody());
+    }
+
+    @Test
+    public void testDeleteRequest() throws Exception {
+        IRequest deleteRequest = new Request(RequestType.DELETE, headers, null, "https://jsonplaceholder.typicode.com/posts/1");
+        Response response = apiHandler.sendRequest(deleteRequest);
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(response.getBody());
+    }
+
+    @Test
+    public void testPatchRequest() throws Exception {
+        JSONObject patchData = new JSONObject();
+        patchData.put("title", "foo");
+
+        IRequest patchRequest = new Request(RequestType.PATCH, headers, patchData, "https://jsonplaceholder.typicode.com/posts/1");
+        Response response = apiHandler.sendRequest(patchRequest);
+        assertEquals(200, response.getStatusCode());
+        assertNotNull(response.getBody());
+    }
+
+//    Note: Head, Options, and Trace methods are not typically used to fetch resource content.
+//    They are more for retrieving metadata, so a successful status code might be enough for a test.
+    @Test
+    public void testHeadRequest() throws Exception {
+        IRequest headRequest = new Request(RequestType.HEAD, headers, null, "https://jsonplaceholder.typicode.com/posts");
+        Response response = apiHandler.sendRequest(headRequest);
+        assertEquals(200, response.getStatusCode());
+    }
+
+    @Test
+    public void testOptionsRequest() throws Exception {
+        IRequest optionsRequest = new Request(RequestType.OPTIONS, headers, null, "https://jsonplaceholder.typicode.com/entries");
+        Response response = apiHandler.sendRequest(optionsRequest);
+        assertEquals(204, response.getStatusCode());
+    }
+
+    @Test
+    public void testTraceRequest() throws Exception {
+        IRequest traceRequest = new Request(RequestType.TRACE, headers, null, "https://jsonplaceholder.typicode.com/entries");
+        Response response = apiHandler.sendRequest(traceRequest);
+        assertEquals(405, response.getStatusCode());
     }
 }

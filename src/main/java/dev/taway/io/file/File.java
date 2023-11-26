@@ -1,7 +1,7 @@
 package dev.taway.io.file;
 
 import dev.taway.exception.io.FileException;
-import dev.taway.io.IOChecker;
+import dev.taway.io.PathChecker;
 import lombok.SneakyThrows;
 
 import java.io.*;
@@ -21,7 +21,7 @@ public class File implements IFile {
 
     @SneakyThrows
     public File(String path) throws IOException {
-        if (!IOChecker.pathIsFile(path)) throw new FileException("Path \"" + path + "\" is not a valid file path.");
+        if (!PathChecker.pathIsFile(path)) throw new FileException("Path \"" + path + "\" is not a valid file path.");
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;

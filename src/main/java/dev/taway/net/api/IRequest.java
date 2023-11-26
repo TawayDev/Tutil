@@ -2,7 +2,7 @@ package dev.taway.net.api;
 
 import org.json.simple.JSONObject;
 
-public interface IRequestObject {
+public interface IRequest {
     JSONObject getHeaders();
 
     JSONObject getBody();
@@ -10,4 +10,6 @@ public interface IRequestObject {
     String getDestination();
 
     boolean getParseBodyAsJSON();
+
+    RequestType getRequestType();
 }

@@ -1,5 +1,6 @@
 package dev.taway.net.api;
 
+import dev.taway.exception.net.api.APIHandlerException;
 import org.json.simple.parser.ParseException;
 
 import java.io.IOException;
@@ -11,11 +12,13 @@ import java.util.ArrayList;
  * @since 0.1
  */
 public interface IApiHandler {
-    ResponseObject post(IRequestObject requestObject) throws IOException, InterruptedException, ParseException;
+//    Response post(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException;
 
-    void executeQueue() throws IOException, ParseException, InterruptedException;
+    Response sendRequest(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException;
 
-    void addToQueue(IRequestObject requestObject);
+    void executeQueue() throws IOException, ParseException, InterruptedException, APIHandlerException;
+
+    void addToQueue(IRequest requestObject);
 
     void removeLastFromQueue();
 
@@ -23,7 +26,7 @@ public interface IApiHandler {
 
     void removeIndexFromQueue(int i);
 
-    ArrayList<IRequestObject> getRequestQueue();
+    ArrayList<IRequest> getRequestQueue();
 
-    ArrayList<IResponseObject> getResponsesToQueue();
+    ArrayList<IResponse> getResponsesToQueue();
 }

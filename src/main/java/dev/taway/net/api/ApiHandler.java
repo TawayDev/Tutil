@@ -1,5 +1,8 @@
 package dev.taway.net.api;
 
+import dev.taway.exception.net.api.APIHandlerException;
+import dev.taway.logging.LogLevel;
+import dev.taway.logging.Logger;
 import dev.taway.time.Stopwatch;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -11,75 +14,148 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class ApiHandler implements IApiHandler {
-    ArrayList<IRequestObject> requestQueue = new ArrayList<>();
-    ArrayList<IResponseObject> responsesToQueue = new ArrayList<>();
+    private static final Logger logger = new Logger("ApiHandler");
+    ArrayList<IRequest> requestQueue = new ArrayList<>();
+    ArrayList<IResponse> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
 
+//    /**
+//     * -- DEPRECATED --
+//     * Sends a request to an API endpoint and returns a response.
+//     * Supports ONLY POST request!
+//     *
+//     * @param requestObject Object representation of a request.
+//     * @return Returns object representation of the response.
+//     * @see Request Request
+//     * @see Response Response
+//     * @since 0.1
+//     */
+//    @Override
+//    @Deprecated
+//    public Response post(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException {
+//        if (requestObject.getRequestType() != RequestType.POST)
+//            throw new APIHandlerException("Cannot send a POST request for a request of type " + requestObject.getRequestType());
+//        Stopwatch stopwatch = new Stopwatch();
+//        stopwatch.start();
+////            Create request:
+//        HttpClient client = HttpClient.newHttpClient();
+//        HttpRequest.Builder r = HttpRequest.newBuilder()
+//                .uri(URI.create(requestObject.getDestination()))
+//                .POST(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+////            Get headers
+//        Iterator<String> keys = requestObject.getHeaders().keySet().iterator();
+//        JSONObject headers = requestObject.getHeaders();
+//        while (keys.hasNext()) {
+//            String key = keys.next();
+////                I have a bad feeling that casting everything to string here will cause some endpoint issues but java has forced my hand once again :)
+//            r.header(key, String.valueOf(headers.get(key)));
+//        }
+////            Build request:
+//        HttpRequest request = r.build();
+////            Send and receive:
+//        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+////            If the body should be treated as JSON then parse it:
+//        JSONParser jsonParser = new JSONParser();
+//        JSONObject responseJsonObject = new JSONObject();
+//        if (requestObject.getParseBodyAsJSON()) {
+//            responseJsonObject = (JSONObject) jsonParser.parse(response.body());
+//        }
+////            Convert returned headers to
+//        JSONObject jsonHeaders = new JSONObject();
+//        jsonHeaders.putAll(response.headers().map());
+////            Stop time
+//        stopwatch.stop();
+////            Return
+//        return new Response(
+//                requestObject,
+//                jsonHeaders,
+//                responseJsonObject,
+//                response.body(),
+//                response.statusCode(),
+//                stopwatch.getElapsedMillis(),
+//                requestObject.getParseBodyAsJSON()
+//        );
+//    }
+
     /**
-     * Sends RequestObject to api endpoint and returns ResponseObject.
+     * Sends a request to an API endpoint and returns a response.
      *
      * @param requestObject Object representation of a request.
      * @return Returns object representation of the response.
-     * @see dev.taway.net.api.RequestObject RequestObject
-     * @see dev.taway.net.api.ResponseObject ResponseObject
-     * @since 0.1
+     * @see Request Request
+     * @see Response Response
+     * @since 0.1.5
      */
     @Override
-    public ResponseObject post(IRequestObject requestObject) throws IOException, InterruptedException, ParseException {
+    public Response sendRequest(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.start();
-//            Create request:
+
         HttpClient client = HttpClient.newHttpClient();
-        HttpRequest.Builder r = HttpRequest.newBuilder()
-                .uri(URI.create(requestObject.getDestination()))
-                .POST(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
-//            Get headers
-        Iterator<String> keys = requestObject.getHeaders().keySet().iterator();
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
+                .uri(URI.create(requestObject.getDestination()));
+
         JSONObject headers = requestObject.getHeaders();
-        while (keys.hasNext()) {
-            String key = keys.next();
-//                I have a bad feeling that casting everything to string here will cause some endpoint issues but java has forced my hand once again :)
-            r.header(key, String.valueOf(headers.get(key)));
+        headers.forEach((key, value) -> requestBuilder.header((String) key, (String) value));
+
+        switch (requestObject.getRequestType()) {
+            case GET -> requestBuilder.GET();
+            case POST ->
+                    requestBuilder.POST(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case PUT -> requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case DELETE -> requestBuilder.DELETE();
+//            Note: PATCH method might not be supported directly and may need to be configured manually
+            case PATCH ->
+                    requestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case HEAD -> requestBuilder.method("HEAD", HttpRequest.BodyPublishers.noBody());
+            case OPTIONS -> requestBuilder.method("OPTIONS", HttpRequest.BodyPublishers.noBody());
+            case TRACE -> requestBuilder.method("TRACE", HttpRequest.BodyPublishers.noBody());
+            default -> throw new APIHandlerException("Unsupported request method: " + requestObject.getRequestType());
         }
-//            Build request:
-        HttpRequest request = r.build();
-//            Send and receive:
+
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-//            If the body should be treated as JSON then parse it:
-        JSONParser jsonParser = new JSONParser();
+
         JSONObject responseJsonObject = new JSONObject();
         if (requestObject.getParseBodyAsJSON()) {
+            JSONParser jsonParser = new JSONParser();
             responseJsonObject = (JSONObject) jsonParser.parse(response.body());
         }
-//            Convert returned headers to
+
         JSONObject jsonHeaders = new JSONObject();
         jsonHeaders.putAll(response.headers().map());
-//            Stop time
+
         stopwatch.stop();
-//            Return
-        return new ResponseObject(requestObject, jsonHeaders, responseJsonObject, response.body(), response.statusCode(), stopwatch.getElapsedMillis(), requestObject.getParseBodyAsJSON());
+
+        return new Response(
+                requestObject,
+                jsonHeaders,
+                responseJsonObject,
+                response.body(),
+                response.statusCode(),
+                stopwatch.getElapsedMillis(),
+                requestObject.getParseBodyAsJSON()
+        );
     }
 
     /**
-     * Runs entire {@link IRequestObject} Queue one by one and stores their responses in ResponsesToQueue ArrayList
+     * Runs entire {@link IRequest} Queue one by one and stores their responses in ResponsesToQueue ArrayList
      *
      * @version 0.1.2
-     * @see #addToQueue(IRequestObject)
+     * @see #addToQueue(IRequest)
      * @since 0.1
      */
     @Override
-    public void executeQueue() throws IOException, ParseException, InterruptedException {
+    public void executeQueue() throws IOException, ParseException, InterruptedException, APIHandlerException {
         if (requestQueue.isEmpty()) {
-//            TODO: Custom exception
-//            logger.log(LogLevel.WARN, "executeQueue", "Request queue is empty!");
+            logger.log(LogLevel.WARN, "executeQueue", "Request queue is empty!");
             return;
         }
         Stopwatch stopwatch = new Stopwatch();
-        for (IRequestObject requestObject : requestQueue) {
-            responsesToQueue.add(post(requestObject));
+        for (IRequest requestObject : requestQueue) {
+            responsesToQueue.add(sendRequest(requestObject));
         }
         requestQueue.clear();
         stopwatch.stop();
@@ -87,19 +163,19 @@ public class ApiHandler implements IApiHandler {
     }
 
     /**
-     * Adds {@link IRequestObject} to RequestQueue.
+     * Adds {@link IRequest} to RequestQueue.
      *
      * @param requestObject Object to be added.
-     * @see dev.taway.net.api.RequestObject RequestObject
+     * @see Request Request
      * @since 0.1
      */
     @Override
-    public void addToQueue(IRequestObject requestObject) {
+    public void addToQueue(IRequest requestObject) {
         requestQueue.add(requestObject);
     }
 
     /**
-     * Removes last {@link IRequestObject} from RequestQueue.
+     * Removes last {@link IRequest} from RequestQueue.
      *
      * @since 0.1
      */
@@ -109,7 +185,7 @@ public class ApiHandler implements IApiHandler {
     }
 
     /**
-     * Removes first RequestObject from RequestQueue.
+     * Removes first Request from RequestQueue.
      *
      * @since 0.1
      */
@@ -119,7 +195,7 @@ public class ApiHandler implements IApiHandler {
     }
 
     /**
-     * Removes {@link IRequestObject} from queue at position i.
+     * Removes {@link IRequest} from queue at position i.
      *
      * @param i Position in array.
      * @since 0.1
@@ -134,7 +210,7 @@ public class ApiHandler implements IApiHandler {
      * @since 0.1
      */
     @Override
-    public ArrayList<IRequestObject> getRequestQueue() {
+    public ArrayList<IRequest> getRequestQueue() {
         return requestQueue;
     }
 
@@ -143,7 +219,7 @@ public class ApiHandler implements IApiHandler {
      * @since 0.1
      */
     @Override
-    public ArrayList<IResponseObject> getResponsesToQueue() {
+    public ArrayList<IResponse> getResponsesToQueue() {
         return responsesToQueue;
     }
 }

@@ -1,6 +1,6 @@
 package dev.taway.exception.io;
 
-public class DirectoryException extends Exception{
+public class DirectoryException extends Exception {
     public DirectoryException() {
     }
 

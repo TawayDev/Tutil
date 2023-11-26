@@ -1,5 +1,8 @@
 package dev.taway.time;
 
+import lombok.Getter;
+
+@Getter
 public class Stopwatch {
     long startMillis;
     long endMillis;
@@ -15,18 +18,6 @@ public class Stopwatch {
     public void stop() {
         endMillis = System.nanoTime();
         elapsedMillis = endMillis - startMillis;
-    }
-
-    public long getStartMillis() {
-        return startMillis;
-    }
-
-    public long getEndMillis() {
-        return endMillis;
-    }
-
-    public long getElapsedMillis() {
-        return elapsedMillis;
     }
 
     public String getFormattedTime() {

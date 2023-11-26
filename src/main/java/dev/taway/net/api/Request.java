@@ -1,23 +1,23 @@
 package dev.taway.net.api;
 
-import lombok.Getter;
 import org.json.simple.JSONObject;
 
 /**
  * An object representation of a http request. Used by {@link ApiHandler}
  *
- * @see dev.taway.net.api.ApiHandler#post(IRequestObject)
- * @see dev.taway.net.api.ApiHandler#addToQueue(IRequestObject)
+ * @see dev.taway.net.api.ApiHandler#post(IRequest)
+ * @see dev.taway.net.api.ApiHandler#addToQueue(IRequest)
  * @since 0.1
  */
-@Getter
-public class RequestObject implements IRequestObject {
+public class Request implements IRequest {
     JSONObject headers;
     JSONObject body;
     String destination;
     boolean parseBodyAsJSON;
+    RequestType requestType;
 
-    public RequestObject(JSONObject headers, JSONObject body, String destination) {
+    public Request(RequestType requestType, JSONObject headers, JSONObject body, String destination) {
+        this.requestType = requestType;
         this.headers = headers;
         this.body = body;
         this.destination = destination;
@@ -64,5 +64,10 @@ public class RequestObject implements IRequestObject {
     @Override
     public boolean getParseBodyAsJSON() {
         return parseBodyAsJSON;
+    }
+
+    @Override
+    public RequestType getRequestType() {
+        return requestType;
     }
 }

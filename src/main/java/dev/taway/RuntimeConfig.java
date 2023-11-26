@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min;
  * Configuration for runtime of Tutil. You can modify a lot of behavior from here directly at runtime.<br>
  * This makes it easier for the developer that builds with this library to specify one thing here, and it will be applied globally.
  *
- * @version 0.1.1
+ * @version 0.1.5
  * @since 0.1
  */
 public final class RuntimeConfig {
@@ -100,5 +100,14 @@ public final class RuntimeConfig {
          * @since 0.1
          */
         public static String timeZone = "CET";
+    }
+
+    /**
+     * Runtime configuration of {@link dev.taway.crypto.RSA} class.
+     *
+     * @since 0.1.5
+     */
+    public static class CRYPTO {
+        public static boolean warnUnsafeRSAKeySizes = true;
     }
 }

@@ -1,6 +1,8 @@
 package dev.taway.crypto;
 
 /**
+ * Very ancient type of symmetric encryption.
+ *
  * @see <a href="https://en.wikipedia.org/wiki/Caesar_cipher">Wikipedia - Caesar cipher</a>
  * @since 0.1.2
  */

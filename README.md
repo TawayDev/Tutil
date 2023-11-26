@@ -1,36 +1,27 @@
 # TUTIL
-Tutil stands for <b>T</b>away's <b>Util</b>ities. It is a wrapper/library that I use for making my projects.
-Features are added if i'm using them often and i'm tired of always having to re-write them or i think that they will be useful later.
-## Features
-It's very well documented :D
-- Runtime configuration
-- Logging
-- IO
-  - File management
-  - Directory management
-  - JSON serialization and deserialization
-- NET
-  - Send a POST request to API
-- TIME
-  - Time formatting
-  - Stopwatch
-- SORTING
-  - Bubble sort (integer only)
-- CRYPTO
-  - Caesar cipher
+—short for **T**away's **Util**ities is my personal toolkit I've made to avoid rewriting the same code again and again.
+If I find a piece of code that I think is useful, or I'm writing it way too often I add it here.
 
-## Planned
-<b>NOTE:</b> This doesn't mean that all of these features will make it into the library but rather that it is on my mind to attempt adding them.
-- More I/O features
-  - YAML/XML Serialization and deserialization
-- More networking features
-  - HTTP server and client
-  - TCP/UDP socket
-- More encryption algorithms
-  - Symmetric-key algorithm
-  - Public-key cryptography
-  - XOR cipher
-- Data structures
-  - Queue
-  - Stack
-  - Tree<br>
+## Features
+
+- **Runtime Configuration**: Change once and everywhere.
+- **Logging**: Very simple logging class that may just be what you need.
+- **IO (Input/Output)**:
+  - **File Management**: Each file is handled like an object, so you can simply call a method on it, and it will do what you expect.
+  - **Directory Management**: Same as files but with directories.
+  - **JSON Handling**: Easy conversions to and from JSON files.
+- **NET**:
+  - **Sending requests**: Send a request using a single RequestObject and get back everything as a ResponseObject. You can send both synchronous and asynchronous requests.<br>
+- **TIME**:
+  - **Time Formatting**: Make timestamps readable.
+  - **Stopwatch**: Simple stopwatch to calculate how long it was from start to finish.
+- **SORTING**:
+  - **Bubble Sort**: Only sorting numbers for now.
+- **CRYPTO**:
+  - **Caesar Cipher**: Simple symmetric encryption ... NO! I'm not thinking about the Roman Empire on a daily basis why do you ask?
+  - **RSA**: Asymmetric encryption using keys.
+
+## Coding Style
+Write code that's easy to read and build on.
+No complicated over-engineered enterprise level code.
+Simple and functional code is what I like best.
