@@ -20,7 +20,7 @@ public class File implements IFile {
     String path;
 
     @SneakyThrows
-    public File(String path) throws IOException {
+    public File(String path) {
         if (!PathChecker.pathIsFile(path)) throw new FileException("Path \"" + path + "\" is not a valid file path.");
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();

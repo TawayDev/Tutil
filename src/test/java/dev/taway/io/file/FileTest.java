@@ -1,6 +1,5 @@
 package dev.taway.io.file;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -11,14 +10,14 @@ class FileTest {
 
     String path = "./testFile.txt";
 
-    @AfterEach
-    void tearDown() throws IOException {
-        File file = new File(path);
-        java.io.File f = new java.io.File(path);
-        if (!f.delete()) {
-            System.out.println("After test cleanup FAILURE! canRead=" + f.canRead() + " canWrite=" + f.canWrite() + " canExecute=" + f.canExecute() + " inUse=" + file.isInUse());
-        }
-    }
+//    @AfterEach
+//    void tearDown() throws IOException {
+//        File file = new File(path);
+//        java.io.File f = new java.io.File(path);
+//        if (!f.delete()) {
+//            System.out.println("After test cleanup FAILURE! canRead=" + f.canRead() + " canWrite=" + f.canWrite() + " canExecute=" + f.canExecute() + " inUse=" + file.isInUse());
+//        }
+//    }
 
     @Test
     void create() throws IOException {
@@ -27,6 +26,7 @@ class FileTest {
 
         file.create();
         assertTrue(f.exists());
+        file.delete();
     }
 
     @Test
@@ -57,6 +57,7 @@ class FileTest {
         file.overwrite("hello world!");
         String contents = file.readAllAsString();
         assertEquals("hello world!", contents);
+        file.delete();
     }
 
     @Test
@@ -69,6 +70,7 @@ class FileTest {
         file.append("balls!");
         String contents = file.readAllAsString();
         assertEquals("hello world!balls!", contents);
+        file.delete();
     }
 
     @Test
@@ -81,6 +83,7 @@ class FileTest {
         file.append("hello world!", true);
         String contents = file.readAllAsString();
         assertEquals("hello world!\nhello world!", contents);
+        file.delete();
     }
 
     @Test
@@ -93,5 +96,6 @@ class FileTest {
         file.append("hello world!", true);
         String[] contents = file.readAllAsStringArr();
         assertEquals("hello world!hello world!", contents[0] + contents[1]);
+        file.delete();
     }
 }

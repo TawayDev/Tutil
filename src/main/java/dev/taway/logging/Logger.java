@@ -3,7 +3,11 @@ package dev.taway.logging;
 import dev.taway.RuntimeConfig;
 import dev.taway.io.file.File;
 import dev.taway.time.Formatter;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
+
+import java.io.IOException;
 
 /**
  * Object used for logging to console and or files. Behavior can be configured in {@link dev.taway.RuntimeConfig}
@@ -12,6 +16,8 @@ import lombok.SneakyThrows;
  * @see RuntimeConfig
  * @since 0.1.1
  */
+@Getter
+@Setter
 public class Logger {
     String className;
     File file;
@@ -44,6 +50,13 @@ public class Logger {
         file = new File(logPath);
     }
 
+    /**
+     * Creates a logger object for the specified class.
+     *
+     * @param className         Name of the class being logged.
+     * @param forceLogToFile    Overrides logBelowLevel from RuntimeConfig and saves everything.
+     * @param forceLogToConsole Overrides logBelowLevel from RuntimeConfig and prints everything.
+     */
     public Logger(String className, boolean forceLogToFile, boolean forceLogToConsole) {
         this(className);
         this.forceLogToFile = forceLogToFile;
@@ -57,27 +70,29 @@ public class Logger {
      * @param method   Method from which this method was called from.
      * @param text     Message to be logged.
      */
-    @SneakyThrows
     public void log(LogLevel logLevel, String method, String text) {
         toFile(logLevel, method, text);
         toConsole(logLevel, method, text);
         if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
     }
 
-    @SneakyThrows
     private void toFile(LogLevel logLevel, String method, String text) {
-        if ((logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) || !forceLogToFile) return;
-        file.append(RuntimeConfig.LOGGING.fileLogFormat
-                        .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
-                        .replace("{LEVEL}", logLevel.NAME)
-                        .replace("{CLASS}", className)
-                        .replace("{METHOD}", method)
-                        .replace("{MESSAGE}", text)
-                , true);
+        if (!forceLogToConsole) if (logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) return;
+        try {
+            file.append(RuntimeConfig.LOGGING.fileLogFormat
+                            .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
+                            .replace("{LEVEL}", logLevel.NAME)
+                            .replace("{CLASS}", className)
+                            .replace("{METHOD}", method)
+                            .replace("{MESSAGE}", text)
+                    , true);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void toConsole(LogLevel logLevel, String method, String text) {
-        if ((logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel) || !forceLogToConsole) return;
+        if (!forceLogToConsole) if (logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel) return;
         System.out.println(
                 RuntimeConfig.LOGGING.consoleLogFormat
                         .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))

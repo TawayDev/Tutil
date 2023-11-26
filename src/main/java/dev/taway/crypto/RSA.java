@@ -3,6 +3,8 @@ package dev.taway.crypto;
 import dev.taway.RuntimeConfig;
 import dev.taway.logging.LogLevel;
 import dev.taway.logging.Logger;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -16,6 +18,8 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+@Getter
+@Setter
 public class RSA {
     private static final Logger logger = new Logger("RSA");
     private static final String ALGORITHM = "RSA";
@@ -28,8 +32,8 @@ public class RSA {
      * @param keySize Size of the key in bits.
      */
     public RSA(int keySize) {
-        if (keySize < 2048 && RuntimeConfig.CRYPTO.warnUnsafeRSAKeySizes)
-            logger.log(LogLevel.WARN, "Constructor", "Using keys smaller than 2048-bits is NOT recommended! Please use 2048-bits for better security!");
+        if ((keySize < 2048) && RuntimeConfig.CRYPTO.warnUnsafeRSAKeySizes)
+            logger.log(LogLevel.WARN, "Constructor", "Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!");
         generateKeyPair(keySize);
     }
 

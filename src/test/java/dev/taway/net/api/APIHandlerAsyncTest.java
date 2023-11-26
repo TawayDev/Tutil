@@ -2,12 +2,15 @@ package dev.taway.net.api;
 
 import org.json.simple.JSONObject;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class APIHandlerAsyncTest {
 
     APIHandlerAsync apiHandlerAsync = new APIHandlerAsync(new ApiHandler());
     JSONObject headers = new JSONObject();
+
     @Test
     public void testGetRequestAsync() {
         IRequest getRequest = new Request(RequestType.GET, headers, null, "https://jsonplaceholder.typicode.com/posts");

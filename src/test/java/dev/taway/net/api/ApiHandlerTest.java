@@ -1,13 +1,7 @@
 package dev.taway.net.api;
 
-import dev.taway.exception.net.api.APIHandlerException;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.ParseException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.util.ArrayList;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -70,7 +64,7 @@ class ApiHandlerTest {
         assertNotNull(response.getBody());
     }
 
-//    Note: Head, Options, and Trace methods are not typically used to fetch resource content.
+    //    Note: Head, Options, and Trace methods are not typically used to fetch resource content.
 //    They are more for retrieving metadata, so a successful status code might be enough for a test.
     @Test
     public void testHeadRequest() throws Exception {
