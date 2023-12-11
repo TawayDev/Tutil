@@ -2,6 +2,8 @@ package dev.taway.io.json;
 
 import dev.taway.exception.io.JsonObjectException;
 import dev.taway.io.file.File;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.SneakyThrows;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -18,16 +20,10 @@ import java.util.HashMap;
  *
  * @since 0.1.4
  */
+@NoArgsConstructor
+@AllArgsConstructor
 public class JsonObject {
     private JSONObject jsonObject;
-
-    public JsonObject() {
-    }
-
-    public JsonObject(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
-    }
-
     /**
      * Converts HashMap into a JsonObject
      *

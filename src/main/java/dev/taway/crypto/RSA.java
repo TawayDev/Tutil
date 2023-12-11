@@ -3,6 +3,7 @@ package dev.taway.crypto;
 import dev.taway.RuntimeConfig;
 import dev.taway.logging.LogLevel;
 import dev.taway.logging.Logger;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,7 +22,9 @@ import java.security.spec.X509EncodedKeySpec;
 @Getter
 @Setter
 public class RSA {
+    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
     private static final Logger logger = new Logger("RSA");
+    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
     private static final String ALGORITHM = "RSA";
     private PrivateKey privateKey;
     private PublicKey publicKey;

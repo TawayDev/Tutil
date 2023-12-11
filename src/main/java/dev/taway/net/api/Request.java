@@ -5,8 +5,9 @@ import org.json.simple.JSONObject;
 /**
  * An object representation of a http request. Used by {@link ApiHandler}
  *
- * @see dev.taway.net.api.ApiHandler#post(IRequest)
+ * @see dev.taway.net.api.ApiHandler#sendRequest(IRequest)
  * @see dev.taway.net.api.ApiHandler#addToQueue(IRequest)
+ * @see dev.taway.net.api.RequestType
  * @since 0.1
  */
 public class Request implements IRequest {

@@ -5,7 +5,7 @@ import org.json.simple.JSONObject;
 /**
  * Object representation of a {@link ApiHandler} response.
  *
- * @see dev.taway.net.api.ApiHandler#post(IRequest)
+ * @see dev.taway.net.api.ApiHandler#sendRequest(IRequest)
  * @see ApiHandler#getResponsesToQueue()
  * @since 0.1
  */
