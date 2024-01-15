@@ -39,27 +39,34 @@ public class ApiHandler implements IApiHandler {
      */
     @Override
     public Response sendRequest(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException {
+//        Start timer
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.start();
+//        Instantiate the http client
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(requestObject.getDestination()));
+//        Add headers
         JSONObject headers = requestObject.getHeaders();
         headers.forEach((key, value) -> requestBuilder.header((String) key, (String) value));
-
+//        Get request type
         configureRequestType(requestBuilder, requestObject);
-
+//        Create a request
         HttpRequest request = requestBuilder.build();
+//        Send the request
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
+//        Parse response
         JSONObject responseJsonObject = new JSONObject();
         if (requestObject.getParseBodyAsJSON()) {
             JSONParser jsonParser = new JSONParser();
             responseJsonObject = (JSONObject) jsonParser.parse(response.body());
         }
+//        Parse headers into a JSON object
         JSONObject jsonHeaders = new JSONObject();
         jsonHeaders.putAll(response.headers().map());
+//        Stop timer
         stopwatch.stop();
+//        Return a response
         return new Response(
                 requestObject,
                 jsonHeaders,
