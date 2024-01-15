@@ -25,3 +25,13 @@ If I find a piece of code that I think is useful, or I'm writing it way too ofte
 Write code that's easy to read and build on.
 No complicated over-engineered enterprise level code.
 Simple and functional code is what I like best.
+
+## Download
+Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https://repsy.io/) so you may need to add it to maven repos.
+```pom
+<dependency>
+  <groupId>dev.taway</groupId>
+  <artifactId>Tutil</artifactId>
+  <version>0.1.6.2</version>
+</dependency>
+```

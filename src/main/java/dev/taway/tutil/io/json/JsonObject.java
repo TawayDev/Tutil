@@ -24,6 +24,7 @@ import java.util.HashMap;
 @AllArgsConstructor
 public class JsonObject {
     private JSONObject jsonObject;
+
     /**
      * Converts HashMap into a JsonObject
      *

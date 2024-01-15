@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class SQLExecutorTest {
 
-    @Test @Disabled("Feature unfinished!")
+    @Test @Disabled("SQL: Feature unfinished!")
     void executeQuery() throws SQLException {
 //        TODO: fixme
         RuntimeConfig.SQL.URL="jdbc:mysql://127.0.0.1:3306";

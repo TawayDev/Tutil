@@ -5,7 +5,6 @@ import dev.taway.tutil.io.file.File;
 import dev.taway.tutil.time.Formatter;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.SneakyThrows;
 
 import java.io.IOException;
 
@@ -74,30 +73,28 @@ public class Logger {
         if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
     }
 
+    private String prepareMessage(LogLevel logLevel, String method, String text, String color) {
+        return RuntimeConfig.LOGGING.consoleLogFormat
+                .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
+                .replace("{LEVEL}", color + logLevel.NAME + ConsoleColor.RESET.COLOR)
+                .replace("{CLASS}", className)
+                .replace("{METHOD}", method)
+                .replace("{MESSAGE}", text);
+    }
+
     private void toFile(LogLevel logLevel, String method, String text) {
-        if (!forceLogToConsole) if (logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) return;
+        if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) return;
         try {
-            file.append(RuntimeConfig.LOGGING.fileLogFormat
-                            .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
-                            .replace("{LEVEL}", logLevel.NAME)
-                            .replace("{CLASS}", className)
-                            .replace("{METHOD}", method)
-                            .replace("{MESSAGE}", text)
-                    , true);
+            final String message = prepareMessage(logLevel, method, text, "");
+            file.append(message, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void toConsole(LogLevel logLevel, String method, String text) {
-        if (!forceLogToConsole) if (logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel) return;
-        System.out.println(
-                RuntimeConfig.LOGGING.consoleLogFormat
-                        .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
-                        .replace("{LEVEL}", logLevel.COLOR + logLevel.NAME + ConsoleColor.RESET.COLOR)
-                        .replace("{CLASS}", className)
-                        .replace("{METHOD}", method)
-                        .replace("{MESSAGE}", text)
-        );
+        if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel) return;
+        final String message = prepareMessage(logLevel, method, text, logLevel.COLOR);
+        System.out.println(message);
     }
 }

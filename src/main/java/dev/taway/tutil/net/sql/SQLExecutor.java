@@ -1,13 +1,11 @@
 package dev.taway.tutil.net.sql;
+
 import dev.taway.tutil.RuntimeConfig;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class SQLExecutor {
@@ -17,11 +15,13 @@ public class SQLExecutor {
 
     /**
      * Executes an SQL query. Make sure to sanitize the query first before sending it.
+     *
      * @see MySQLQueryBuilder
      */
     public ResultSet executeQuery(String query) {
         try {
-            if((url == null) || (username == null) || (password == null)) throw new dev.taway.tutil.exception.net.sql.SQLException("One or more of the following is null: url, username and or password.");
+            if ((url == null) || (username == null) || (password == null))
+                throw new dev.taway.tutil.exception.net.sql.SQLException("One or more of the following is null: url, username and or password.");
             Connection connection = DriverManager.getConnection(url, username, password);
             Statement statement = connection.createStatement();
             return statement.executeQuery(query);

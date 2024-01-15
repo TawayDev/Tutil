@@ -17,10 +17,12 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
+
 @Getter
 @Setter
 public class ApiHandler implements IApiHandler {
-    @Getter(AccessLevel.NONE) @Setter(AccessLevel.NONE)
+    @Getter(AccessLevel.NONE)
+    @Setter(AccessLevel.NONE)
     private static final Logger logger = new Logger("ApiHandler");
     ArrayList<IRequest> requestQueue = new ArrayList<>();
     ArrayList<IResponse> responsesToQueue = new ArrayList<>();
@@ -39,28 +41,13 @@ public class ApiHandler implements IApiHandler {
     public Response sendRequest(IRequest requestObject) throws IOException, InterruptedException, ParseException, APIHandlerException {
         Stopwatch stopwatch = new Stopwatch();
         stopwatch.start();
-
         HttpClient client = HttpClient.newHttpClient();
         HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(URI.create(requestObject.getDestination()));
-
         JSONObject headers = requestObject.getHeaders();
         headers.forEach((key, value) -> requestBuilder.header((String) key, (String) value));
 
-        switch (requestObject.getRequestType()) {
-            case GET -> requestBuilder.GET();
-            case POST ->
-                    requestBuilder.POST(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
-            case PUT -> requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
-            case DELETE -> requestBuilder.DELETE();
-//            Note: PATCH method might not be supported directly and may need to be configured manually
-            case PATCH ->
-                    requestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
-            case HEAD -> requestBuilder.method("HEAD", HttpRequest.BodyPublishers.noBody());
-            case OPTIONS -> requestBuilder.method("OPTIONS", HttpRequest.BodyPublishers.noBody());
-            case TRACE -> requestBuilder.method("TRACE", HttpRequest.BodyPublishers.noBody());
-            default -> throw new APIHandlerException("Unsupported request method: " + requestObject.getRequestType());
-        }
+        configureRequestType(requestBuilder, requestObject);
 
         HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -70,12 +57,9 @@ public class ApiHandler implements IApiHandler {
             JSONParser jsonParser = new JSONParser();
             responseJsonObject = (JSONObject) jsonParser.parse(response.body());
         }
-
         JSONObject jsonHeaders = new JSONObject();
         jsonHeaders.putAll(response.headers().map());
-
         stopwatch.stop();
-
         return new Response(
                 requestObject,
                 jsonHeaders,
@@ -85,6 +69,22 @@ public class ApiHandler implements IApiHandler {
                 stopwatch.getElapsedMillis(),
                 requestObject.getParseBodyAsJSON()
         );
+    }
+
+    private void configureRequestType(HttpRequest.Builder requestBuilder, IRequest requestObject) throws APIHandlerException {
+        switch (requestObject.getRequestType()) {
+            case GET -> requestBuilder.GET();
+            case POST ->
+                    requestBuilder.POST(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case PUT -> requestBuilder.PUT(HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case DELETE -> requestBuilder.DELETE();
+            case PATCH ->
+                    requestBuilder.method("PATCH", HttpRequest.BodyPublishers.ofString(requestObject.getBody().toJSONString()));
+            case HEAD -> requestBuilder.method("HEAD", HttpRequest.BodyPublishers.noBody());
+            case OPTIONS -> requestBuilder.method("OPTIONS", HttpRequest.BodyPublishers.noBody());
+            case TRACE -> requestBuilder.method("TRACE", HttpRequest.BodyPublishers.noBody());
+            default -> throw new APIHandlerException("Unsupported request method: " + requestObject.getRequestType());
+        }
     }
 
     /**

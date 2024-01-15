@@ -3,13 +3,13 @@ package dev.taway.tutil.net.sql;
 @SuppressWarnings("unused")
 public class MySQLQueryBuilder {
 
-    private StringBuilder queryBuilder;
+    private final StringBuilder queryBuilder;
 
     public MySQLQueryBuilder() {
         queryBuilder = new StringBuilder();
     }
 
-//    SELECT-type query methods
+    //    SELECT-type query methods
     public MySQLQueryBuilder SELECT(String columns) {
         queryBuilder.append("SELECT ").append(columns).append(" ");
         return this;
@@ -60,7 +60,7 @@ public class MySQLQueryBuilder {
         return this;
     }
 
-//    UPDATE-type query methods
+    //    UPDATE-type query methods
     public MySQLQueryBuilder UPDATE(String table) {
         queryBuilder.append("UPDATE `").append(table).append("` ");
         return this;
@@ -73,13 +73,13 @@ public class MySQLQueryBuilder {
         return this;
     }
 
-//    DELETE-type query method
+    //    DELETE-type query method
     public MySQLQueryBuilder DELETE_FROM(String table) {
         queryBuilder.append("DELETE FROM `").append(table).append("` ");
         return this;
     }
 
-//    INSERT-type query methods
+    //    INSERT-type query methods
     public MySQLQueryBuilder INSERT_INTO(String table, String... columns) {
         queryBuilder.append("INSERT INTO `").append(table).append("` (");
         appendCommaSeparated(columns);
@@ -94,7 +94,7 @@ public class MySQLQueryBuilder {
         return this;
     }
 
-//    Table alteration methods
+    //    Table alteration methods
     public MySQLQueryBuilder CREATE_TABLE(String table, String... columns) {
         queryBuilder.append("CREATE TABLE `").append(table).append("` (");
         appendCommaSeparated(columns);
@@ -122,7 +122,7 @@ public class MySQLQueryBuilder {
         return this;
     }
 
-//    Table deletion method
+    //    Table deletion method
     public MySQLQueryBuilder DROP_TABLE(String table) {
         queryBuilder.append("DROP TABLE `").append(table).append("` ");
         return this;
@@ -133,7 +133,7 @@ public class MySQLQueryBuilder {
         return this;
     }
 
-//    Helper method to append comma-separated values.
+    //    Helper method to append comma-separated values.
     private void appendCommaSeparated(String... values) {
         for (int i = 0; i < values.length; i++) {
             queryBuilder.append(values[i]);
