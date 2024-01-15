@@ -76,7 +76,7 @@ public class Logger {
     private String prepareMessage(LogLevel logLevel, String method, String text, String color) {
         return RuntimeConfig.LOGGING.consoleLogFormat
                 .replace("{TIME}", Formatter.formatTime(System.currentTimeMillis()))
-                .replace("{LEVEL}", color + logLevel.NAME + ConsoleColor.RESET.COLOR)
+                .replace("{LEVEL}", color + logLevel.NAME + (color.equals("") ? "" : ConsoleColor.RESET.COLOR))
                 .replace("{CLASS}", className)
                 .replace("{METHOD}", method)
                 .replace("{MESSAGE}", text);
