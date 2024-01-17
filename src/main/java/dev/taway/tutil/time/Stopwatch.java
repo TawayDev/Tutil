@@ -1,5 +1,6 @@
 package dev.taway.tutil.time;
 
+import dev.taway.tutil.format.TimeFormatter;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,6 @@ public class Stopwatch {
     }
 
     public String getFormattedTime() {
-        return Formatter.formatTime(elapsedMillis);
+        return TimeFormatter.formatTime(elapsedMillis);
     }
 }

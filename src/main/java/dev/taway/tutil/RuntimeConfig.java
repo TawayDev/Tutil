@@ -3,7 +3,7 @@ package dev.taway.tutil;
 import dev.taway.tutil.crypto.RSA;
 import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.net.sql.SQLExecutor;
-import dev.taway.tutil.time.Formatter;
+import dev.taway.tutil.format.TimeFormatter;
 import dev.taway.tutil.time.Stopwatch;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -88,7 +88,7 @@ public final class RuntimeConfig {
     }
 
     /**
-     * Runtime configuration of {@link Stopwatch} & {@link Formatter} classes.
+     * Runtime configuration of {@link Stopwatch} & {@link TimeFormatter} classes.
      *
      * @since 0.1
      */

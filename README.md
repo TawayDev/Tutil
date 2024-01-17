@@ -1,30 +1,24 @@
-# TUTIL
-—short for **T**away's **Util**ities is my personal toolkit I've made to avoid rewriting the same code again and again.
-If I find a piece of code that I think is useful, or I'm writing it way too often I add it here.
+- **Runtime Configuration**: Allows for project-wide configuration changes with ease and consistency.
 
-## Features
+- **Logging**: An efficient logging class that fulfills essential logging needs.
 
-- **Runtime Configuration**: Change once and everywhere.
-- **Logging**: Very simple logging class that may just be what you need.
-- **IO (Input/Output)**:
-  - **File Management**: Each file is handled like an object, so you can simply call a method on it, and it will do what you expect.
-  - **Directory Management**: Same as files but with directories.
-  - **JSON Handling**: Easy conversions to and from JSON files.
-- **NET**:
-  - **Sending requests**: Send a request using a single RequestObject and get back everything as a ResponseObject. You can send both synchronous and asynchronous requests.<br>
-- **TIME**:
-  - **Time Formatting**: Make timestamps readable.
-  - **Stopwatch**: Simple stopwatch to calculate how long it was from start to finish.
-- **SORTING**:
-  - **Bubble Sort**: Only sorting numbers for now.
+- **IO (Input/Output)**: Robust file and directory handling along with easy-to-use JSON conversion utilities.
+    - **File Management**: Each file is wrapped into an easily manipulatable object.
+    - **Directory Management**: Directories are also handled as objects, providing simplicity and efficiency.
+    - **JSON Handling**: Hassle-free conversions to and from JSON files for quick handling of data.
+
+- **NET**: Provides an intuitive interface for sending network requests.
+    - **Sending requests**: Utilizes a RequestObject for sending network requests. Responses are encapsulated into a ResponseObject for simplicity.
+
+- **TIME**: Offers convenient tools for time formatting and measurement.
+    - **Time Formatting**: Converts timestamps into more human-friendly formats.
+    - **Stopwatch**: A simple yet effective stopwatch tool for time-tracking needs.
+
+- **SORTING**: Currently provides a Bubble Sort implementation for sorting numeric data.
+
 - **CRYPTO**:
-  - **Caesar Cipher**: Simple symmetric encryption ... NO! I'm not thinking about the Roman Empire on a daily basis why do you ask?
-  - **RSA**: Asymmetric encryption using keys.
-
-## Coding Style
-Write code that's easy to read and build on.
-No complicated over-engineered enterprise level code.
-Simple and functional code is what I like best.
+    - **Caesar Cipher**: Simple symmetric encryption ... NO! I'm not thinking about the Roman Empire on a daily basis why do you ask?
+  - **RSA**: An implementation of the RSA asymmetric encryption algorithm.
 
 ## Download
 Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https://repsy.io/) so you may need to add it to maven repos.
@@ -32,6 +26,6 @@ Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https:/
 <dependency>
   <groupId>dev.taway</groupId>
   <artifactId>Tutil</artifactId>
-  <version>0.1.6.3</version>
+  <version>0.1.7</version>
 </dependency>
 ```

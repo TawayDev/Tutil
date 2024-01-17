@@ -1,4 +1,4 @@
-package dev.taway.tutil.time;
+package dev.taway.tutil.format;
 
 import dev.taway.tutil.RuntimeConfig;
 
@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Formatter {
+public class TimeFormatter {
     /**
      * Formats a timestamp according to format and timezone that is defined in {@link RuntimeConfig.TIME}
      *
