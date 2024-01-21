@@ -7,35 +7,37 @@ import org.junit.jupiter.api.Test;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class SQLExecutorTest {
 
-    @Test @Disabled("SQL: Feature unfinished!")
+    @Test
+    @Disabled("SQL: Feature unfinished!")
     void executeQuery() throws SQLException {
 //        TODO: fixme
-        RuntimeConfig.SQL.URL="jdbc:mysql://127.0.0.1:3306";
-        RuntimeConfig.SQL.username="root";
-        RuntimeConfig.SQL.password="";
+        RuntimeConfig.SQL.URL = "jdbc:mysql://127.0.0.1:3306";
+        RuntimeConfig.SQL.username = "root";
+        RuntimeConfig.SQL.password = "";
         SQLExecutor sqlExecutor = new SQLExecutor();
         sqlExecutor.executeQuery(
                 new MySQLQueryBuilder().CREATE_TABLE("MyTable")
-                                        .build()
+                        .build()
         );
         sqlExecutor.executeQuery(
                 new MySQLQueryBuilder().ALTER_TABLE("MyTable")
-                                        .ADD_COLUMN("test1,test2")
-                                        .build()
+                        .ADD_COLUMN("test1,test2")
+                        .build()
         );
         sqlExecutor.executeQuery(
-                new MySQLQueryBuilder().INSERT_INTO("MyTable", new String[]{"test1","test2"})
-                                        .VALUES("val1,val2")
-                                        .build()
+                new MySQLQueryBuilder().INSERT_INTO("MyTable", "test1", "test2")
+                        .VALUES("val1,val2")
+                        .build()
         );
         ResultSet resultSet = sqlExecutor.executeQuery(
                 new MySQLQueryBuilder().SELECT("*")
-                                        .FROM("MyTable")
-                                        .build()
+                        .FROM("MyTable")
+                        .build()
         );
         while (resultSet.next()) {
             String test1 = resultSet.getString("test1");

@@ -1,5 +1,4 @@
 ### TODO
-idk.
 
 ### PLANNED
 <b>NOTE:</b> This doesn't mean that all of these features will make it into the library but rather that it is on my mind to attempt adding them.

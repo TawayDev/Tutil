@@ -1,12 +1,11 @@
 package dev.taway.tutil;
 
 import dev.taway.tutil.crypto.RSA;
+import dev.taway.tutil.format.TimeFormatter;
+import dev.taway.tutil.logging.LogLevel;
 import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.net.sql.SQLExecutor;
-import dev.taway.tutil.format.TimeFormatter;
 import dev.taway.tutil.time.Stopwatch;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 
 /**
  * Configuration for runtime of Tutil. You can modify a lot of behavior from here directly at runtime.<br>
@@ -43,6 +42,14 @@ public final class RuntimeConfig {
          */
         public static String consoleLogFormat = "[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}";
         /**
+         * Specifies the time format for console logs.
+         */
+        public static String consoleTimeFormat = "hh:mm";
+        /**
+         * Specifies the time format for file logs.
+         */
+        public static String fileTimeFormat = "hh:mm";
+        /**
          * Specifies to which file logger should write to. <br>
          * <b>NOTE:</b> File path cannot be changed once logger is instantiated!
          *
@@ -50,35 +57,30 @@ public final class RuntimeConfig {
          */
         public static String logFilePath = "./log.txt";
         /**
-         * Tells logger which log "request" to ignore.
-         * The ones ignored will not be logged into console.
-         * 0 = Everything (Fatal, Error, Warn, Info & Debug) <br>
-         * 1 = Fatal, Error, Warn & Info <br>
-         * 2 = Fatal, Error & Warn <br>
-         * 3 = Fatal & Error <br>
-         * 4 = Only Fatal <br>
-         * 5 = Nothing
+         * Specifies the minimum {@link LogLevel} level for logs to be displayed in the console.
+         * Any level below the one defined here will be ignored.
          *
          * @since 0.1.1
          */
-        @Min(value = 0, message = "0 is the minimal possible value where everything will be logged.")
-        @Max(value = 5, message = "5 is the max possible value where nothing will be logged.")
-        public static int dontLogToConsoleBelowLevel = 0;
+        public static LogLevel dontLogToConsoleBelowLevel = LogLevel.TRACE;
         /**
-         * Tells logger which log "request" to ignore.
-         * The ones ignored will not be logged into a file.
-         * 0 = Everything (Fatal, Error, Warn, Info & Debug) <br>
-         * 1 = Fatal, Error, Warn & Info <br>
-         * 2 = Fatal, Error & Warn <br>
-         * 3 = Fatal & Error <br>
-         * 4 = Only Fatal <br>
-         * 5 = Nothing
-         *
-         * @since 0.1.1
+         * Specifies the minimum {@link LogLevel} level for logs to be written to a file.
+         * Any log level below the one defined here will be ignored and not written to the file.
          */
-        @Min(value = 0, message = "0 is the minimal possible value where everything will be logged.")
-        @Max(value = 5, message = "5 is the max possible value where nothing will be logged.")
-        public static int dontLogToFileBelowLevel = 0;
+        public static LogLevel dontLogToFileBelowLevel = LogLevel.TRACE;
+        /**
+         * Indicates whether console logging is enabled or disabled. If set to
+         * {@code true}, console logging will be disabled; if set to {@code false},
+         * console logging will be enabled. (This variable overrides force log and other settings)
+         */
+        public static boolean disableConsoleLog = false;
+        /**
+         * Indicates whether file logging is enabled or disabled. If set to
+         * {@code true}, file logging will be disabled; if set to {@code false},
+         * file logging will be enabled.(This variable overrides force log and other settings)
+         */
+        public static boolean disableFileLog = false;
+
         /**
          * If fatal error occurred aka got logged and exitOnFatal is true then the program will terminate itself.
          *

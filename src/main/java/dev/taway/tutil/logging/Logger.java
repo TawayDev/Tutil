@@ -69,8 +69,8 @@ public class Logger {
      * the program will exit with exit code -1 after the log is written.
      *
      * @param logLevel The log level of the message.
-     * @param method The name of the method from which the log method is called.
-     * @param text The text of the log message to be logged.
+     * @param method   The name of the method from which the log method is called.
+     * @param text     The text of the log message to be logged.
      */
     public void log(LogLevel logLevel, String method, String text) {
         toFile(logLevel, method, text);
@@ -79,13 +79,26 @@ public class Logger {
     }
 
     /**
+     * Logs a trace message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#TRACE}.
+     *
+     * @param method The name of the method from which the logTrace method is called.
+     * @param text   The text of the trace message to be logged.
+     */
+    public void trace(String method, String text) {
+        log(LogLevel.TRACE, method, text);
+    }
+
+    /**
      * Logs a debug message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#DEBUG}.
+     *
      * @param method The name of the method from which the logDebug method is called.
      * @param text   The text of the debug message to be logged.
      */
-    public void logDebug(String method, String text) {
+    public void debug(String method, String text) {
         log(LogLevel.DEBUG, method, text);
     }
 
@@ -93,10 +106,11 @@ public class Logger {
      * Logs an informational message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#INFO}.
+     *
      * @param method The name of the method from which the logInfo method is called.
      * @param text   The text of the informational message to be logged.
      */
-    public void logInfo(String method, String text) {
+    public void info(String method, String text) {
         log(LogLevel.INFO, method, text);
     }
 
@@ -104,10 +118,11 @@ public class Logger {
      * Logs a warning message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#WARN}.
+     *
      * @param method The name of the method from which the logWarn method is called.
      * @param text   The text of the warning message to be logged.
      */
-    public void logWarn(String method, String text) {
+    public void warn(String method, String text) {
         log(LogLevel.WARN, method, text);
     }
 
@@ -115,10 +130,11 @@ public class Logger {
      * Logs an error message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#ERROR}.
+     *
      * @param method The name of the method from which the error occurred.
      * @param text   The error message to be logged.
      */
-    public void logError(String method, String text) {
+    public void error(String method, String text) {
         log(LogLevel.ERROR, method, text);
     }
 
@@ -126,25 +142,31 @@ public class Logger {
      * Logs a fatal message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#FATAL}.
+     *
      * @param method The name of the method from which the logFatal method is called.
      * @param text   The text of the fatal message to be logged.
      */
-    public void logFatal(String method, String text) {
+    public void fatal(String method, String text) {
         log(LogLevel.FATAL, method, text);
     }
 
     private String prepareMessage(String format, LogLevel logLevel, String method, String text, String color) {
-        HashMap<String, String> magic = new HashMap<>();
-        magic.put("{TIME}", TimeFormatter.formatTime(System.currentTimeMillis()));
-        magic.put("{LEVEL}", color + logLevel.NAME + (color.equals("") ? "" : ConsoleColor.RESET.COLOR));
-        magic.put("{CLASS}", className);
-        magic.put("{METHOD}", method);
-        magic.put("{MESSAGE}", text);
-        return StringFormatter.formatString(format, magic);
+        HashMap<String, String> logValues = new HashMap<>();
+        logValues.put("{TIME}", TimeFormatter.formatTime(
+                System.currentTimeMillis(),
+                color.equals("") ? RuntimeConfig.LOGGING.fileTimeFormat : RuntimeConfig.LOGGING.consoleTimeFormat,
+                RuntimeConfig.TIME.timeZone)
+        );
+        logValues.put("{LEVEL}", color + logLevel.NAME + (color.equals("") ? "" : ConsoleColor.RESET.COLOR));
+        logValues.put("{CLASS}", className);
+        logValues.put("{METHOD}", method);
+        logValues.put("{MESSAGE}", text);
+        return StringFormatter.formatString(format, logValues);
     }
 
     private void toFile(LogLevel logLevel, String method, String text) {
-        if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel) return;
+        if (RuntimeConfig.LOGGING.disableFileLog) return;
+        if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel.LEVEL) return;
         try {
             final String message = prepareMessage(RuntimeConfig.LOGGING.fileLogFormat, logLevel, method, text, "");
             file.append(message, true);
@@ -154,7 +176,8 @@ public class Logger {
     }
 
     private void toConsole(LogLevel logLevel, String method, String text) {
-        if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel) return;
+        if (RuntimeConfig.LOGGING.disableConsoleLog) return;
+        if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel.LEVEL) return;
         final String message = prepareMessage(RuntimeConfig.LOGGING.consoleLogFormat, logLevel, method, text, logLevel.COLOR);
         System.out.println(message);
     }

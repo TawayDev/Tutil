@@ -10,11 +10,12 @@ import dev.taway.tutil.RuntimeConfig;
  * @since 0.1.1
  */
 public enum LogLevel {
-    DEBUG(0, "DEBUG", ConsoleColor.WHITE.COLOR),
-    INFO(1, "INFO", ""),
-    WARN(2, "WARN", ConsoleColor.YELLOW.COLOR),
-    ERROR(3, "ERROR", ConsoleColor.RED.COLOR),
-    FATAL(4, "FATAL", ConsoleColor.PURPLE.COLOR);
+    TRACE(0, "TRACE", ConsoleColor.YELLOW_UNDERLINED.COLOR),
+    DEBUG(1, "DEBUG", ConsoleColor.WHITE.COLOR),
+    INFO(2, "INFO", ""),
+    WARN(3, "WARN", ConsoleColor.YELLOW.COLOR),
+    ERROR(4, "ERROR", ConsoleColor.RED.COLOR),
+    FATAL(5, "FATAL", ConsoleColor.PURPLE.COLOR);
 
     public final int LEVEL;
     public final String NAME;

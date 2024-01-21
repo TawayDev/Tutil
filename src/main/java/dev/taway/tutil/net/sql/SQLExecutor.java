@@ -31,10 +31,10 @@ public class SQLExecutor {
     /**
      * Executes an SQL query and returns the result set. Make sure to sanitise it first to avoid any SQL injection attacks.
      *
-     * @see #executePreparedQuery(PreparedStatement)
      * @param query the SQL query to be executed
      * @return the result set of the executed query
      * @throws RuntimeException if there is an SQL exception while executing the query
+     * @see #executePreparedQuery(PreparedStatement)
      */
     public ResultSet executeQuery(String query) {
         try {
