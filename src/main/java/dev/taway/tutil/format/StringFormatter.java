@@ -1,9 +1,12 @@
 package dev.taway.tutil.format;
 
+import dev.taway.tutil.logging.Logger;
+
 import java.util.HashMap;
 import java.util.Map;
 
 public class StringFormatter {
+    static Logger logger = new Logger();
     /**
      * Formats a string by replacing placeholders with corresponding values from a HashMap.
      *
@@ -13,10 +16,18 @@ public class StringFormatter {
      * @return The formatted string with placeholders replaced by values from the HashMap.
      */
     public static String formatString(String formatString, HashMap<String, String> values) {
-        for (Map.Entry<String, String> entry : values.entrySet()) {
-            String key = entry.getKey();
-            String value = entry.getValue();
-            formatString = formatString.replace(key, value);
+        if (formatString != null) {
+            if(!values.isEmpty()) {
+                for (Map.Entry<String, String> entry : values.entrySet()) {
+                    String key = entry.getKey();
+                    String value = entry.getValue();
+                    formatString = formatString.replace(key, value);
+                }
+            } else {
+                logger.warn("Replace values are empty!");
+            }
+        } else {
+            logger.warn("formatString is null!");
         }
         return formatString;
     }

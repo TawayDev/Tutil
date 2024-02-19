@@ -24,7 +24,7 @@ import java.security.spec.X509EncodedKeySpec;
 public class RSA {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private static final Logger logger = new Logger("RSA");
+    private static final Logger logger = new Logger();
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
     private static final String ALGORITHM = "RSA";
@@ -38,7 +38,7 @@ public class RSA {
      */
     public RSA(int keySize) {
         if ((keySize < 2048) && RuntimeConfig.CRYPTO.warnUnsafeRSAKeySizes)
-            logger.log(LogLevel.WARN, "Constructor", "Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!");
+            logger.warn("Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!");
         generateKeyPair(keySize);
     }
 

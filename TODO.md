@@ -12,7 +12,5 @@
     - Public-key cryptography
     - XOR cipher
 - Data structures
-    - Queue
-    - Stack
     - Tree
 - Event handling.

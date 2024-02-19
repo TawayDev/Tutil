@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class ApiHandler implements IApiHandler {
     @Getter(AccessLevel.NONE)
     @Setter(AccessLevel.NONE)
-    private static final Logger logger = new Logger("ApiHandler");
+    private static final Logger logger = new Logger();
     ArrayList<IRequest> requestQueue = new ArrayList<>();
     ArrayList<IResponse> responsesToQueue = new ArrayList<>();
     long totalQueueMillis;
