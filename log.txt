@@ -1,2 +1,17 @@
 
 [01:18] [WARN] [RSA.Constructor] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[{TIME}] [{LEVEL}] [{CLASS}.{METHOD}] {MESSAGE}
+[07:21] [WARN] [null.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:21] [WARN] [null.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:32] [WARN] [dev.taway.tutil.logging.Logger.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:36] [WARN] [dev.taway.tutil.logging.Logger.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:37] [WARN] [dev.taway.tutil.logging.Logger.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:38] [WARN] [dev.taway.tutil.crypto.RSA.getCurrentMethodCaller] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:40] [WARN] [dev.taway.tutil.crypto.RSA.<init>] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!
+[07:41] [WARN] [dev.taway.tutil.crypto.RSA.CONSTRUCTOR] Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!

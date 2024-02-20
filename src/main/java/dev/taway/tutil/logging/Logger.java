@@ -32,7 +32,7 @@ public class Logger {
      * @since 0.1.7
      */
     public Logger() {
-        this.className = this.getClassName();
+        getOwnerClass();
         file = new File(RuntimeConfig.LOGGING.logFilePath);
     }
 
@@ -43,7 +43,7 @@ public class Logger {
      * @since 0.1.7
      */
     public Logger(String logPath) {
-        this.className = this.getClassName();
+        getOwnerClass();
         file = new File(logPath);
     }
 
@@ -57,6 +57,41 @@ public class Logger {
         this();
         this.forceLogToFile = forceLogToFile;
         this.forceLogToConsole = forceLogToConsole;
+    }
+
+    /**
+     * Retrieves the class name of the owner of the class instance.
+     */
+    private void getOwnerClass() {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        String name = stackTraceElements[3].getClassName();
+        this.className = name;
+    }
+
+    /**
+     * Gets method name which is executing stuff in this instance
+     * @return A method name
+     */
+    private String getCurrentMethodCaller() {
+        StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
+        String name = stackTraceElements[3].getMethodName();
+        return name.equals("<init>") ? "CONSTRUCTOR" : name;
+    }
+
+    /**
+     * Logs a message with the specified log level, method name, and text.
+     * The log is written to a file and printed to the console if configured to do so.
+     * If the log level is "FATAL" and the "exitOnFatal" flag is enabled in {@link RuntimeConfig.LOGGING},
+     * the program will exit with exit code -1 after the log is written.
+     *
+     * @param logLevel The log level of the message.
+     * @param method   The name of the method from which the log method is called.
+     * @param text     The text of the log message to be logged.
+     */
+    public void log(LogLevel logLevel, String method, String text) {
+        toFile(logLevel, method, text);
+        toConsole(logLevel, method, text);
+        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
     }
 
     /**
@@ -142,23 +177,6 @@ public class Logger {
     }
 
 //region Deprecated
-    /**
-     * Logs a message with the specified log level, method name, and text.
-     * The log is written to a file and printed to the console if configured to do so.
-     * If the log level is "FATAL" and the "exitOnFatal" flag is enabled in {@link RuntimeConfig.LOGGING},
-     * the program will exit with exit code -1 after the log is written.
-     *
-     * @param logLevel The log level of the message.
-     * @param method   The name of the method from which the log method is called.
-     * @param text     The text of the log message to be logged.
-     */
-    @Deprecated
-    public void log(LogLevel logLevel, String method, String text) {
-        toFile(logLevel, method, text);
-        toConsole(logLevel, method, text);
-        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
-    }
-
     /**
      * Logs a trace message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
@@ -247,9 +265,9 @@ public class Logger {
                 RuntimeConfig.TIME.timeZone)
         );
         logValues.put("{LEVEL}", color + logLevel.NAME + (color.equals("") ? "" : ConsoleColor.RESET.COLOR));
-        logValues.put("{CLASS}", className);
-        logValues.put("{METHOD}", method);
-        logValues.put("{MESSAGE}", text);
+        logValues.put("{CLASS}", String.valueOf(className));
+        logValues.put("{METHOD}", String.valueOf(method));
+        logValues.put("{MESSAGE}", String.valueOf(text));
         return StringFormatter.formatString(format, logValues);
     }
 
@@ -269,13 +287,5 @@ public class Logger {
         if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel.LEVEL) return;
         final String message = prepareMessage(RuntimeConfig.LOGGING.consoleLogFormat, logLevel, method, text, logLevel.COLOR);
         System.out.println(message);
-    }
-
-    /**
-     * Gets method name which is executing stuff in this instance
-     * @return A method name
-     */
-    private String getCurrentMethodCaller() {
-        return new Object() {}.getClass().getEnclosingMethod().getName();
     }
 }
