@@ -54,7 +54,7 @@ public class RSA {
             return cipher.doFinal(message.getBytes());
         } catch (IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | NoSuchAlgorithmException |
                  InvalidKeyException e) {
-            logger.log(LogLevel.ERROR, "encrypt", e.toString());
+            logger.error(e.toString());
             return new byte[0];
         }
     }
@@ -68,7 +68,7 @@ public class RSA {
             return new String(decryptedBytes);
         } catch (IllegalBlockSizeException | BadPaddingException | NoSuchPaddingException | NoSuchAlgorithmException |
                  InvalidKeyException e) {
-            logger.log(LogLevel.ERROR, "decrypt", e.toString());
+            logger.error(e.toString());
             return "";
         }
     }
@@ -82,7 +82,7 @@ public class RSA {
             this.privateKey = pair.getPrivate();
             this.publicKey = pair.getPublic();
         } catch (NoSuchAlgorithmException e) {
-            logger.log(LogLevel.ERROR, "generateKeyPair", e.toString());
+            logger.error(e.toString());
         }
     }
 
@@ -118,7 +118,7 @@ public class RSA {
             }
 
         } catch (IOException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-            logger.log(LogLevel.ERROR, "readKeyFromFile", e.toString());
+            logger.error(e.toString());
 //            BAD BAD BAD!!! RETURNING NULL BAD BAD!
             return null;
         }
@@ -129,7 +129,7 @@ public class RSA {
             byte[] keyBytes = key.getEncoded();
             Files.write(Paths.get(path), keyBytes);
         } catch (IOException e) {
-            logger.log(LogLevel.ERROR, "saveKeyToFile", e.toString());
+            logger.error(e.toString());
         }
     }
 }

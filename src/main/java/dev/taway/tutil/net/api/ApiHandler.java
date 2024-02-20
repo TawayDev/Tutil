@@ -104,7 +104,7 @@ public class ApiHandler implements IApiHandler {
     @Override
     public void executeQueue() throws IOException, ParseException, InterruptedException, APIHandlerException {
         if (requestQueue.isEmpty()) {
-            logger.log(LogLevel.WARN, "executeQueue", "Request queue is empty!");
+            logger.warn("Request queue is empty!");
             return;
         }
         Stopwatch stopwatch = new Stopwatch();
