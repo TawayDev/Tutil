@@ -1,7 +1,9 @@
 package dev.taway.tutil;
 
 import dev.taway.tutil.crypto.RSA;
+import dev.taway.tutil.format.TextAlign;
 import dev.taway.tutil.format.TimeFormatter;
+import dev.taway.tutil.format.StringFormatter;
 import dev.taway.tutil.logging.LogLevel;
 import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.net.sql.SQLExecutor;
@@ -125,5 +127,23 @@ public final class RuntimeConfig {
         public static String URL = null;
         public static String username = null;
         public static String password = null;
+    }
+
+    /**
+     * Runtime configuration of {@link StringFormatter}
+     */
+    public static class STRING_FORMATTING {
+        /**
+         * Represents the amount by which the size of a formatted string should be increased.
+         * It is used in the StringFormatter class to align strings to a specified size by adding padding characters.
+         * The value of increaseFormattedStringSizeBy should be a non-negative integer.
+         * For the best results use a number that is divisible by two.
+         */
+        public static int increaseFormattedStringSizeBy = 6;
+
+        /**
+         * The default text alignment used by the StringFormatter class.
+         */
+        public static TextAlign defaultTextAlign = TextAlign.MIDDLE;
     }
 }

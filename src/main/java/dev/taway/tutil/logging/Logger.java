@@ -266,6 +266,9 @@ public class Logger {
                 color.equals("") ? RuntimeConfig.LOGGING.fileTimeFormat : RuntimeConfig.LOGGING.consoleTimeFormat,
                 RuntimeConfig.TIME.timeZone)
         );
+
+
+
         logValues.put("{LEVEL}", color + logLevel.NAME + (color.equals("") ? "" : ConsoleColor.RESET.COLOR));
         logValues.put("{CLASS}", String.valueOf(className));
         logValues.put("{METHOD}", String.valueOf(method));

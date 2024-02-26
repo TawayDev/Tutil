@@ -1,5 +1,7 @@
 package dev.taway.tutil.format;
 
+import dev.taway.tutil.RuntimeConfig;
+import dev.taway.tutil.exception.IllegalRuntimeConfigurationException;
 import dev.taway.tutil.logging.Logger;
 
 import java.util.HashMap;
@@ -41,6 +43,7 @@ public class StringFormatter {
         if (string == null || textAlign == null) {
             throw new IllegalArgumentException("String and textAlign cannot be null.");
         }
+        if(textAlign.name().equals(TextAlign.NONE.name())) return string;
         if (newSize < 0) {
             throw new IllegalArgumentException("newSize cannot be negative.");
         }
@@ -57,5 +60,23 @@ public class StringFormatter {
             default:
                 return string;
         }
+    }
+
+    public static String alignString(String string, int newSize) {
+        if (RuntimeConfig.STRING_FORMATTING.defaultTextAlign == null) {
+            throw new IllegalRuntimeConfigurationException("defaultTextAlign cannot be null.");
+        }
+        return alignString(string, newSize, RuntimeConfig.STRING_FORMATTING.defaultTextAlign);
+    }
+
+    public static String alignString(String string) throws IllegalRuntimeConfigurationException {
+        if(RuntimeConfig.STRING_FORMATTING.increaseFormattedStringSizeBy < 0) {
+            throw new IllegalRuntimeConfigurationException("increaseFormattedStringSizeBy cannot be negative.");
+        }
+        return alignString(string,
+                !RuntimeConfig.STRING_FORMATTING.defaultTextAlign.name().equals(TextAlign.NONE) ?
+                        string.length() + RuntimeConfig.STRING_FORMATTING.increaseFormattedStringSizeBy :
+                        string.length()
+        );
     }
 }
