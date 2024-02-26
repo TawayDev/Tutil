@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class StringFormatter {
     static Logger logger = new Logger();
+
     /**
      * Formats a string by replacing placeholders with corresponding values from a HashMap.
      *

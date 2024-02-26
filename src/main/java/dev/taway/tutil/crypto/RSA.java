@@ -1,7 +1,6 @@
 package dev.taway.tutil.crypto;
 
 import dev.taway.tutil.RuntimeConfig;
-import dev.taway.tutil.logging.LogLevel;
 import dev.taway.tutil.logging.Logger;
 import lombok.AccessLevel;
 import lombok.Getter;

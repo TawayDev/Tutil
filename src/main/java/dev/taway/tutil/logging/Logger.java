@@ -39,7 +39,7 @@ public class Logger {
     /**
      * Creates a logger object for the specified class.
      *
-     * @param logPath   Custom logging file path.
+     * @param logPath Custom logging file path.
      * @since 0.1.7
      */
     public Logger(String logPath) {
@@ -70,6 +70,7 @@ public class Logger {
 
     /**
      * Gets method name which is executing stuff in this instance
+     *
      * @return A method name
      */
     private String getCurrentMethodCaller() {
@@ -115,7 +116,7 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#TRACE}.
      *
-     * @param text   The text of the trace message to be logged.
+     * @param text The text of the trace message to be logged.
      */
     public void trace(String text) {
         log(LogLevel.TRACE, getCurrentMethodCaller(), text);
@@ -126,7 +127,7 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#DEBUG}.
      *
-     * @param text   The text of the debug message to be logged.
+     * @param text The text of the debug message to be logged.
      */
     public void debug(String text) {
         log(LogLevel.DEBUG, getCurrentMethodCaller(), text);
@@ -137,7 +138,7 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#INFO}.
      *
-     * @param text   The text of the informational message to be logged.
+     * @param text The text of the informational message to be logged.
      */
     public void info(String text) {
         log(LogLevel.INFO, getCurrentMethodCaller(), text);
@@ -148,7 +149,7 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#WARN}.
      *
-     * @param text   The text of the warning message to be logged.
+     * @param text The text of the warning message to be logged.
      */
     public void warn(String text) {
         log(LogLevel.WARN, getCurrentMethodCaller(), text);
@@ -159,7 +160,7 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#ERROR}.
      *
-     * @param text   The error message to be logged.
+     * @param text The error message to be logged.
      */
     public void error(String text) {
         log(LogLevel.ERROR, getCurrentMethodCaller(), text);
@@ -170,13 +171,14 @@ public class Logger {
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#FATAL}.
      *
-     * @param text   The text of the fatal message to be logged.
+     * @param text The text of the fatal message to be logged.
      */
     public void fatal(String text) {
         log(LogLevel.FATAL, getCurrentMethodCaller(), text);
     }
 
 //region Deprecated
+
     /**
      * Logs a trace message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}

@@ -1,7 +1,6 @@
 package dev.taway.tutil.net.api;
 
 import dev.taway.tutil.exception.net.api.APIHandlerException;
-import dev.taway.tutil.logging.LogLevel;
 import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.time.Stopwatch;
 import lombok.AccessLevel;
