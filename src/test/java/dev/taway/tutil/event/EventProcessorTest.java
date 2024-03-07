@@ -2,7 +2,9 @@ package dev.taway.tutil.event;
 
 import dev.taway.tutil.data.Trio;
 import dev.taway.tutil.event.annotation.Event;
-import dev.taway.tutil.event.annotation.EventProcessingPriority;
+import dev.taway.tutil.event.processor.EventProcessingPriority;
+import dev.taway.tutil.event.processor.EventProcessor;
+import dev.taway.tutil.event.processor.IEventHandler;
 import dev.taway.tutil.exception.event.EventNotBroadcastedException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;

@@ -1,5 +1,7 @@
 package dev.taway.tutil.event.annotation;
 
+import dev.taway.tutil.event.processor.EventProcessingPriority;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

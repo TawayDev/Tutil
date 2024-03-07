@@ -13,6 +13,3 @@
     - XOR cipher
 - Data structures
     - Tree
-- Event handling.
-  - Event handling
-  - Event interceptors

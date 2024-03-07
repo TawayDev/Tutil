@@ -1,4 +1,4 @@
-package dev.taway.tutil.event.annotation;
+package dev.taway.tutil.event.processor;
 
 public enum EventProcessingPriority {
     HIGH(2),

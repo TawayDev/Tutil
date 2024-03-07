@@ -1,9 +1,8 @@
-package dev.taway.tutil.event;
+package dev.taway.tutil.event.processor;
 
 import dev.taway.tutil.data.Trio;
 import dev.taway.tutil.event.annotation.Event;
 import dev.taway.tutil.event.annotation.EventHandler;
-import dev.taway.tutil.event.annotation.EventProcessingPriority;
 import dev.taway.tutil.exception.event.EventAnnotationNotEligibleException;
 import dev.taway.tutil.exception.event.EventHandlerNotEligible;
 import dev.taway.tutil.exception.event.EventNotBroadcastedException;
@@ -19,8 +18,7 @@ import java.util.ArrayList;
 public class EventProcessor {
     private static final Logger logger = new Logger();
     @Getter
-    private static final ArrayList<Trio<EventProcessingPriority, String, IEventHandler>> eventHandlers = new ArrayList<>();
-
+    private static ArrayList<Trio<EventProcessingPriority, String, IEventHandler>> eventHandlers = new ArrayList<>();
     /**
      * Registers an event handler and adds it to the list of event handlers.
      *
