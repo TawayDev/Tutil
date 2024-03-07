@@ -28,6 +28,6 @@ Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https:/
 <dependency>
   <groupId>dev.taway</groupId>
   <artifactId>Tutil</artifactId>
-  <version>0.1.8</version>
+  <version>0.2.0</version>
 </dependency>
 ```
