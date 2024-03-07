@@ -17,8 +17,8 @@ class SQLExecutorTest {
     void executeQuery() throws SQLException {
 //        TODO: fixme
         RuntimeConfig.SQL.URL = "jdbc:mysql://127.0.0.1:3306";
-        RuntimeConfig.SQL.username = "root";
-        RuntimeConfig.SQL.password = "";
+        RuntimeConfig.SQL.USERNAME = "root";
+        RuntimeConfig.SQL.PASSWORD = "";
         SQLExecutor sqlExecutor = new SQLExecutor();
         sqlExecutor.executeQuery(
                 new MySQLQueryBuilder().CREATE_TABLE("MyTable")

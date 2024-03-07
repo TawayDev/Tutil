@@ -33,7 +33,7 @@ public class Logger {
      */
     public Logger() {
         getOwnerClass();
-        file = new File(RuntimeConfig.LOGGING.logFilePath);
+        file = new File(RuntimeConfig.LOGGING.LOG_PATH_FILE);
     }
 
     /**
@@ -76,7 +76,7 @@ public class Logger {
     private String getCurrentMethodCaller() {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         String name = stackTraceElements[3].getMethodName();
-        return name.equals("<init>") ? "CONSTRUCTOR" : name;
+        return name.equals("<init>") && RuntimeConfig.LOGGING.REPLACE_INIT ? "CONSTRUCTOR" : name;
     }
 
     /**
@@ -92,7 +92,7 @@ public class Logger {
     public void log(LogLevel logLevel, String method, String text) {
         toFile(logLevel, method, text);
         toConsole(logLevel, method, text);
-        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
+        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.EXIT_ON_FATAL_LOG) System.exit(-1);
     }
 
     /**
@@ -108,7 +108,7 @@ public class Logger {
         String method = getCurrentMethodCaller();
         toFile(logLevel, method, text);
         toConsole(logLevel, method, text);
-        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.exitOnFatal) System.exit(-1);
+        if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.EXIT_ON_FATAL_LOG) System.exit(-1);
     }
 
     /**
@@ -263,8 +263,8 @@ public class Logger {
         HashMap<String, String> logValues = new HashMap<>();
         logValues.put("{TIME}", TimeFormatter.formatTime(
                 System.currentTimeMillis(),
-                color.equals("") ? RuntimeConfig.LOGGING.fileTimeFormat : RuntimeConfig.LOGGING.consoleTimeFormat,
-                RuntimeConfig.TIME.timeZone)
+                color.equals("") ? RuntimeConfig.LOGGING.TIME_FORMAT_FILE : RuntimeConfig.LOGGING.TIME_FORMAT_CONSOLE,
+                RuntimeConfig.TIME.TIME_ZONE)
         );
 
 
@@ -277,10 +277,10 @@ public class Logger {
     }
 
     private void toFile(LogLevel logLevel, String method, String text) {
-        if (RuntimeConfig.LOGGING.disableFileLog) return;
-        if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToFileBelowLevel.LEVEL) return;
+        if (RuntimeConfig.LOGGING.DISABLE_LOG_FILE) return;
+        if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.MINIMUM_LOG_LEVEL_FILE.LEVEL) return;
         try {
-            final String message = prepareMessage(RuntimeConfig.LOGGING.fileLogFormat, logLevel, method, text, "");
+            final String message = prepareMessage(RuntimeConfig.LOGGING.LOG_FORMAT_FILE, logLevel, method, text, "");
             file.append(message, true);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -288,9 +288,9 @@ public class Logger {
     }
 
     private void toConsole(LogLevel logLevel, String method, String text) {
-        if (RuntimeConfig.LOGGING.disableConsoleLog) return;
-        if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.dontLogToConsoleBelowLevel.LEVEL) return;
-        final String message = prepareMessage(RuntimeConfig.LOGGING.consoleLogFormat, logLevel, method, text, logLevel.COLOR);
+        if (RuntimeConfig.LOGGING.DISABLE_LOG_CONSOLE) return;
+        if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.MINIMUM_LOG_LEVEL_CONSOLE.LEVEL) return;
+        final String message = prepareMessage(RuntimeConfig.LOGGING.LOG_FORMAT_CONSOLE, logLevel, method, text, logLevel.COLOR);
         System.out.println(message);
     }
 }

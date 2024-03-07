@@ -7,6 +7,7 @@ import dev.taway.tutil.event.processor.EventProcessor;
 import dev.taway.tutil.event.processor.IEventHandler;
 import dev.taway.tutil.exception.event.EventNotBroadcastedException;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

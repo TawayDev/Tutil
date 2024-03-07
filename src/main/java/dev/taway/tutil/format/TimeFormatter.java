@@ -18,8 +18,8 @@ public class TimeFormatter {
      */
     public static String formatTime(long timestamp) {
         Date date = new Date(timestamp);
-        DateFormat formatter = new SimpleDateFormat(RuntimeConfig.TIME.timeFormat);
-        formatter.setTimeZone(TimeZone.getTimeZone(RuntimeConfig.TIME.timeZone));
+        DateFormat formatter = new SimpleDateFormat(RuntimeConfig.TIME.TIME_FORMAT);
+        formatter.setTimeZone(TimeZone.getTimeZone(RuntimeConfig.TIME.TIME_ZONE));
         return formatter.format(date);
     }
 

@@ -10,8 +10,8 @@ import java.sql.*;
 @AllArgsConstructor
 public class SQLExecutor {
     private String url = RuntimeConfig.SQL.URL;
-    private String username = RuntimeConfig.SQL.username;
-    private String password = RuntimeConfig.SQL.password;
+    private String username = RuntimeConfig.SQL.USERNAME;
+    private String password = RuntimeConfig.SQL.PASSWORD;
 
     private void areCredentialsSet() throws dev.taway.tutil.exception.net.sql.SQLException {
         boolean isUrlNull = (url == null);

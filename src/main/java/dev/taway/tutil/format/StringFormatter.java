@@ -63,19 +63,19 @@ public class StringFormatter {
     }
 
     public static String alignString(String string, int newSize) {
-        if (RuntimeConfig.STRING_FORMATTING.defaultTextAlign == null) {
+        if (RuntimeConfig.STRING_FORMATTING.DEFAULT_TEXT_ALIGN == null) {
             throw new IllegalRuntimeConfigurationException("defaultTextAlign cannot be null.");
         }
-        return alignString(string, newSize, RuntimeConfig.STRING_FORMATTING.defaultTextAlign);
+        return alignString(string, newSize, RuntimeConfig.STRING_FORMATTING.DEFAULT_TEXT_ALIGN);
     }
 
     public static String alignString(String string) throws IllegalRuntimeConfigurationException {
-        if(RuntimeConfig.STRING_FORMATTING.increaseFormattedStringSizeBy < 0) {
+        if(RuntimeConfig.STRING_FORMATTING.INCREASE_PADDING_BY < 0) {
             throw new IllegalRuntimeConfigurationException("increaseFormattedStringSizeBy cannot be negative.");
         }
         return alignString(string,
-                !RuntimeConfig.STRING_FORMATTING.defaultTextAlign.name().equals(TextAlign.NONE) ?
-                        string.length() + RuntimeConfig.STRING_FORMATTING.increaseFormattedStringSizeBy :
+                !RuntimeConfig.STRING_FORMATTING.DEFAULT_TEXT_ALIGN.name().equals(TextAlign.NONE) ?
+                        string.length() + RuntimeConfig.STRING_FORMATTING.INCREASE_PADDING_BY :
                         string.length()
         );
     }

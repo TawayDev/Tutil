@@ -14,11 +14,13 @@
     - **Time Formatting**: Converts timestamps into more human-friendly formats.
     - **Stopwatch**: A simple yet effective stopwatch tool for time-tracking needs.
 
-- **SORTING**: Currently provides a Bubble Sort implementation for sorting numeric data.
+- **SORTING**: Currently provides a Bubble Sort implementation for sorting numbers.
 
 - **CRYPTO**:
     - **Caesar Cipher**: Simple symmetric encryption ... NO! I'm not thinking about the Roman Empire on a daily basis why do you ask?
   - **RSA**: An implementation of the RSA asymmetric encryption algorithm.
+
+- **EVENTS** Very basic event handling. Can be used with or without annotations.
 
 ## Download
 Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https://repsy.io/) so you may need to add it to maven repos.

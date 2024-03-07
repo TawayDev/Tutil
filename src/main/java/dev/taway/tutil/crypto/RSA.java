@@ -36,7 +36,7 @@ public class RSA {
      * @param keySize Size of the key in bits.
      */
     public RSA(int keySize) {
-        if ((keySize < 2048) && RuntimeConfig.CRYPTO.warnUnsafeRSAKeySizes)
+        if ((keySize < 2048) && RuntimeConfig.CRYPTO.WARN_UNSAFE_RSA_KEY_SIZE_USED)
             logger.warn("Using keys smaller than 2048-bits is NOT recommended! Please use at least 2048-bits for better security!");
         generateKeyPair(keySize);
     }
