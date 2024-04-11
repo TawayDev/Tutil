@@ -1,9 +1,9 @@
 package dev.taway.tutil;
 
 import dev.taway.tutil.crypto.RSA;
+import dev.taway.tutil.format.StringFormatter;
 import dev.taway.tutil.format.TextAlign;
 import dev.taway.tutil.format.TimeFormatter;
-import dev.taway.tutil.format.StringFormatter;
 import dev.taway.tutil.logging.LogLevel;
 import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.net.sql.SQLExecutor;
