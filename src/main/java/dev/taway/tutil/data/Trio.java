@@ -5,12 +5,23 @@ import lombok.Setter;
 
 @Setter
 @Getter
-public class Trio<T, S, I> extends Pair {
+public class Trio<T, S, I> {
+    private T first;
+    private S second;
     private I third;
 
     public Trio(T first, S second, I third) {
-        super(first, second);
+        this.first = first;
+        this.second = second;
         this.third = third;
+    }
+
+    public Class<?> getFirstType() {
+        return first != null ? first.getClass() : null;
+    }
+
+    public Class<?> getSecondType() {
+        return second != null ? second.getClass() : null;
     }
 
     public Class<?> getThirdType() {
