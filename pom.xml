@@ -6,7 +6,7 @@
 
     <groupId>dev.taway</groupId>
     <artifactId>Tutil</artifactId>
-    <version>0.2.2</version>
+    <version>0.2.3</version>
     <name>tutil</name>
     <distributionManagement>
         <repository>
@@ -106,6 +106,19 @@
                     </execution>
                 </executions>
             </plugin>
+<!--            <plugin>-->
+<!--&lt;!&ndash;                Adds javadoc to compiled jar ... or at least it should lmao&ndash;&gt;-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>attach-javadocs</id>-->
+<!--                        <goals>-->
+<!--                            <goal>jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
         </plugins>
     </build>
 </project>

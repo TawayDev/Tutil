@@ -20,6 +20,7 @@ import java.util.HashMap;
 @Getter
 @Setter
 public class Logger {
+    // TODO: Add buffer for writing into files because writing each log into files on call is dumb and slow!
     String className;
     File file;
 
@@ -134,6 +135,50 @@ public class Logger {
     }
 
     /**
+     * Logs a debug message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#DEBUG_WARN}.
+     *
+     * @param text The text of the debug message to be logged.
+     */
+    public void debugWarn(String text) {
+        log(LogLevel.DEBUG_WARN, getCurrentMethodCaller(), text);
+    }
+
+    /**
+     * Logs a debug message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#DEBUG_ERROR}.
+     *
+     * @param text The text of the debug message to be logged.
+     */
+    public void debugError(String text) {
+        log(LogLevel.DEBUG_ERROR, getCurrentMethodCaller(), text);
+    }
+
+    /**
+     * Logs a debug message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#DEBUG_SUCCESS}.
+     *
+     * @param text The text of the debug message to be logged.
+     */
+    public void debugSuccess(String text) {
+        log(LogLevel.DEBUG_SUCCESS, getCurrentMethodCaller(), text);
+    }
+
+    /**
+     * Logs a debug message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#DEBUG_FAILURE}.
+     *
+     * @param text The text of the debug message to be logged.
+     */
+    public void debugFailure(String text) {
+        log(LogLevel.DEBUG_FAILURE, getCurrentMethodCaller(), text);
+    }
+
+    /**
      * Logs an informational message with the specified method name and text.
      * This method calls the {@link Logger#log(LogLevel, String, String)}
      * method with the log level set to {@link LogLevel#INFO}.
@@ -142,6 +187,28 @@ public class Logger {
      */
     public void info(String text) {
         log(LogLevel.INFO, getCurrentMethodCaller(), text);
+    }
+
+    /**
+     * Logs an informational message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#SUCCESS}.
+     *
+     * @param text The text of the informational message to be logged.
+     */
+    public void success(String text) {
+        log(LogLevel.SUCCESS, getCurrentMethodCaller(), text);
+    }
+
+    /**
+     * Logs an informational message with the specified method name and text.
+     * This method calls the {@link Logger#log(LogLevel, String, String)}
+     * method with the log level set to {@link LogLevel#FAILURE}.
+     *
+     * @param text The text of the informational message to be logged.
+     */
+    public void failure(String text) {
+        log(LogLevel.FAILURE, getCurrentMethodCaller(), text);
     }
 
     /**
