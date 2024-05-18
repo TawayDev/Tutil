@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 class ApiHandlerTest {
     ApiHandler apiHandler = new ApiHandler();
     JSONObject headers = new JSONObject();

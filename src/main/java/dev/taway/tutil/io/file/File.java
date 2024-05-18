@@ -2,6 +2,7 @@ package dev.taway.tutil.io.file;
 
 import dev.taway.tutil.exception.io.FileException;
 import dev.taway.tutil.io.PathChecker;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.*;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
  * @version 0.1.1
  * @since 0.1
  */
+@Getter
 public class File implements IFile {
 
     String absolutePath;

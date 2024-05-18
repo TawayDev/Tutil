@@ -61,4 +61,11 @@ class JsonObjectTest {
         File file = new File("./testWrite.json");
         file.deleteOnExit();
     }
+
+    @Test
+    void returnNewOnNull() {
+        JsonObject json = new JsonObject();
+        JSONObject jo = json.getJsonObject();
+        assertEquals("{}", jo.toJSONString());
+    }
 }

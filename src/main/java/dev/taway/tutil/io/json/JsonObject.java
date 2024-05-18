@@ -2,8 +2,10 @@ package dev.taway.tutil.io.json;
 
 import dev.taway.tutil.exception.io.JsonObjectException;
 import dev.taway.tutil.io.file.File;
+import dev.taway.tutil.logging.Logger;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.SneakyThrows;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -23,6 +25,8 @@ import java.util.HashMap;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JsonObject {
+    private static final Logger log = new Logger();
+    @Setter
     private JSONObject jsonObject;
 
     /**
@@ -109,14 +113,10 @@ public class JsonObject {
      * @since 0.1.4
      */
     public JSONObject getJsonObject() {
+        if (jsonObject == null) {
+            log.warn("jsonObject is null. Returning empty one.");
+            return new JSONObject();
+        }
         return jsonObject;
-    }
-
-    /**
-     * @param jsonObject Sets the JsonObject.
-     * @since 0.1.4
-     */
-    public void setJsonObject(JSONObject jsonObject) {
-        this.jsonObject = jsonObject;
     }
 }

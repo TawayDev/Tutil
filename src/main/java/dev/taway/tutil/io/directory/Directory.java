@@ -2,6 +2,7 @@ package dev.taway.tutil.io.directory;
 
 import dev.taway.tutil.exception.io.DirectoryException;
 import dev.taway.tutil.io.PathChecker;
+import lombok.Getter;
 import lombok.SneakyThrows;
 
 import java.io.File;
@@ -9,7 +10,7 @@ import java.io.IOException;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
+@Getter
 public class Directory implements IDirectory {
     String absolutePath;
     String path;
