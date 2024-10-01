@@ -14,6 +14,6 @@ public class TestEventHandler implements IEventHandler {
 
     @Override
     public void onEvent() {
-        logger.info("Medium priority event broadcasted!");
+        logger.trace("Medium priority event broadcasted!");
     }
 }

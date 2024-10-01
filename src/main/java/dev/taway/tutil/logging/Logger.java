@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashMap;
 
 /**
@@ -21,9 +22,6 @@ import java.util.HashMap;
 @Setter
 public class Logger {
     // TODO: Add buffer for writing into files because writing each log into files on call is dumb and slow!
-    // TODO: Update version number!
-    // TODO: Test object logging!
-    // TODO: Fix object logging
     String className;
     File file;
 
@@ -96,9 +94,10 @@ public class Logger {
      * @param method   The name of the method from which the log method is called.
      * @param text     The text of the log message to be logged.
      */
-    public void log(LogLevel logLevel, String method, Object text) {
-        toFile(logLevel, method, text.toString());
-        toConsole(logLevel, method, text.toString());
+    public void log(LogLevel logLevel, String method, Object... text) {
+        String objectArrayString = concatObjects(text);
+        toFile(logLevel, method, objectArrayString);
+        toConsole(logLevel, method, objectArrayString);
         if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.EXIT_ON_FATAL_LOG) System.exit(-1);
     }
 
@@ -114,16 +113,17 @@ public class Logger {
      * @param logLevel The log level of the message.
      * @param text     The text of the log message to be logged.
      */
-    public void log(LogLevel logLevel, Object text) {
+    public void log(LogLevel logLevel, Object... text) {
         String method = getCurrentMethodCaller();
-        toFile(logLevel, method, text.toString());
-        toConsole(logLevel, method, text.toString());
+        String objectArrayString = concatObjects(text);
+        toFile(logLevel, method, objectArrayString);
+        toConsole(logLevel, method, objectArrayString);
         if (logLevel.NAME.equals("FATAL") && RuntimeConfig.LOGGING.EXIT_ON_FATAL_LOG) System.exit(-1);
     }
 
     /**
      * Logs a trace message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#TRACE}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -131,13 +131,13 @@ public class Logger {
      * <br>
      * @param text The text of the trace message to be logged.
      */
-    public void trace(Object text) {
-        log(LogLevel.TRACE, getCurrentMethodCaller(), text.toString());
+    public void trace(Object... text) {
+        log(LogLevel.TRACE, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -145,13 +145,13 @@ public class Logger {
      * <br>
      * @param text The text of the debug message to be logged.
      */
-    public void debug(Object text) {
-        log(LogLevel.DEBUG, getCurrentMethodCaller(), text.toString());
+    public void debug(Object... text) {
+        log(LogLevel.DEBUG, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG_WARN}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -159,13 +159,13 @@ public class Logger {
      * <br>
      * @param text The text of the debug message to be logged.
      */
-    public void debugWarn(Object text) {
-        log(LogLevel.DEBUG_WARN, getCurrentMethodCaller(), text.toString());
+    public void debugWarn(Object... text) {
+        log(LogLevel.DEBUG_WARN, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG_ERROR}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -173,13 +173,13 @@ public class Logger {
      * <br>
      * @param text The text of the debug message to be logged.
      */
-    public void debugError(Object text) {
-        log(LogLevel.DEBUG_ERROR, getCurrentMethodCaller(), text.toString());
+    public void debugError(Object... text) {
+        log(LogLevel.DEBUG_ERROR, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG_SUCCESS}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -187,13 +187,13 @@ public class Logger {
      * <br>
      * @param text The text of the debug message to be logged.
      */
-    public void debugSuccess(Object text) {
-        log(LogLevel.DEBUG_SUCCESS, getCurrentMethodCaller(), text.toString());
+    public void debugSuccess(Object... text) {
+        log(LogLevel.DEBUG_SUCCESS, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG_FAILURE}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -207,7 +207,7 @@ public class Logger {
 
     /**
      * Logs an informational message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#INFO}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -215,13 +215,13 @@ public class Logger {
      * <br>
      * @param text The text of the informational message to be logged.
      */
-    public void info(Object text) {
-        log(LogLevel.INFO, getCurrentMethodCaller(), text.toString());
+    public void info(Object... text) {
+        log(LogLevel.INFO, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs an informational message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#SUCCESS}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -229,13 +229,13 @@ public class Logger {
      * <br>
      * @param text The text of the informational message to be logged.
      */
-    public void success(Object text) {
-        log(LogLevel.SUCCESS, getCurrentMethodCaller(), text.toString());
+    public void success(Object... text) {
+        log(LogLevel.SUCCESS, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs an informational message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#FAILURE}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -243,13 +243,13 @@ public class Logger {
      * <br>
      * @param text The text of the informational message to be logged.
      */
-    public void failure(Object text) {
-        log(LogLevel.FAILURE, getCurrentMethodCaller(), text.toString());
+    public void failure(Object... text) {
+        log(LogLevel.FAILURE, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a warning message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#WARN}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -257,13 +257,13 @@ public class Logger {
      * <br>
      * @param text The text of the warning message to be logged.
      */
-    public void warn(Object text) {
-        log(LogLevel.WARN, getCurrentMethodCaller(), text.toString());
+    public void warn(Object... text) {
+        log(LogLevel.WARN, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs an error message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#ERROR}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -271,13 +271,13 @@ public class Logger {
      * <br>
      * @param text The error message to be logged.
      */
-    public void error(Object text) {
-        log(LogLevel.ERROR, getCurrentMethodCaller(), text.toString());
+    public void error(Object... text) {
+        log(LogLevel.ERROR, getCurrentMethodCaller(), concatObjects(text));
     }
 
     /**
      * Logs a fatal message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#FATAL}.
      * <br>
      * Method uses Object.toString to convert any object that is not string already into a string.
@@ -285,15 +285,15 @@ public class Logger {
      * <br>
      * @param text The text of the fatal message to be logged.
      */
-    public void fatal(Object text) {
-        log(LogLevel.FATAL, getCurrentMethodCaller(), text.toString());
+    public void fatal(Object... text) {
+        log(LogLevel.FATAL, getCurrentMethodCaller(), concatObjects(text));
     }
 
 //region Deprecated
 
     /**
      * Logs a trace message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#TRACE}.
      *
      * @param method The name of the method from which the logTrace method is called.
@@ -306,7 +306,7 @@ public class Logger {
 
     /**
      * Logs a debug message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#DEBUG}.
      *
      * @param method The name of the method from which the logDebug method is called.
@@ -319,7 +319,7 @@ public class Logger {
 
     /**
      * Logs an informational message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#INFO}.
      *
      * @param method The name of the method from which the logInfo method is called.
@@ -332,7 +332,7 @@ public class Logger {
 
     /**
      * Logs a warning message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#WARN}.
      *
      * @param method The name of the method from which the logWarn method is called.
@@ -345,7 +345,7 @@ public class Logger {
 
     /**
      * Logs an error message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#ERROR}.
      *
      * @param method The name of the method from which the error occurred.
@@ -358,7 +358,7 @@ public class Logger {
 
     /**
      * Logs a fatal message with the specified method name and text.
-     * This method calls the {@link Logger#log(LogLevel, String, Object)}
+     * This method calls the {@link Logger#log(LogLevel, String, Object...)}
      * method with the log level set to {@link LogLevel#FATAL}.
      *
      * @param method The name of the method from which the logFatal method is called.
@@ -404,5 +404,17 @@ public class Logger {
         if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.MINIMUM_LOG_LEVEL_CONSOLE.LEVEL) return;
         final String message = prepareMessage(RuntimeConfig.LOGGING.LOG_FORMAT_CONSOLE, logLevel, method, text, logLevel.COLOR);
         System.out.println(message);
+    }
+
+    /**
+     * Converts multiple Objects into one string and adds ", " between each object.
+     * @param text Array of objects
+     * @return A single string representation of input
+     */
+    private String concatObjects(Object... text) {
+        return String.join(RuntimeConfig.LOGGING.MULTIPLE_OBJECTS_LOGGED_SEPARATOR,
+                Arrays.stream(text)
+                        .map(String::valueOf)
+                        .toArray(String[]::new));
     }
 }
