@@ -32,7 +32,7 @@ public class EventProcessor {
                 throw new EventHandlerNotEligible("EventHandler annotation is not present on class!");
 //            Search for duplicates
             for (Trio<EventProcessingPriority, String, IEventHandler> handler : eventHandlers) {
-                if (handler.getThird().getClass().equals(clazz.getClass())) {
+                if (handler.getZ().getClass().equals(clazz.getClass())) {
                     throw new EventHandlerNotEligible("Duplicate event handler registration is not allowed!");
                 }
             }
@@ -58,8 +58,8 @@ public class EventProcessor {
         for (int i = 0; i < n - 1; i++) {
             for (int j = 0; j < n - i - 1; j++) {
                 Trio<EventProcessingPriority, String, IEventHandler> temp = eventHandlers.get(j);
-                EventProcessingPriority priority = (EventProcessingPriority) temp.getFirst();
-                EventProcessingPriority priority2 = (EventProcessingPriority) eventHandlers.get(j + 1).getFirst();
+                EventProcessingPriority priority = (EventProcessingPriority) temp.getX();
+                EventProcessingPriority priority2 = (EventProcessingPriority) eventHandlers.get(j + 1).getX();
 
                 if (priority.getPriority() < priority2.getPriority()) {
                     eventHandlers.set(j, eventHandlers.get(j + 1));
@@ -115,8 +115,8 @@ public class EventProcessor {
             boolean eventBroadcasted = false;
 
             for (Trio<EventProcessingPriority, String, IEventHandler> handler : eventHandlers) {
-                if (handler.getSecond().equals(eventName)) {
-                    handler.getThird().onEvent();
+                if (handler.getY().equals(eventName)) {
+                    handler.getZ().onEvent();
                     eventBroadcasted = true;
                 }
             }

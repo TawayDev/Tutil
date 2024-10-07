@@ -28,8 +28,8 @@ class EventProcessorTest {
         }
 
         ArrayList<Trio<EventProcessingPriority, String, IEventHandler>> eventHandlers = EventProcessor.getEventHandlers();
-        EventProcessingPriority first = (EventProcessingPriority) eventHandlers.get(0).getFirst();
-        EventProcessingPriority second = (EventProcessingPriority) eventHandlers.get(1).getFirst();
+        EventProcessingPriority first = (EventProcessingPriority) eventHandlers.get(0).getX();
+        EventProcessingPriority second = (EventProcessingPriority) eventHandlers.get(1).getX();
 
         Assertions.assertEquals(2, first.priorityValue);
         Assertions.assertEquals(1, second.priorityValue);

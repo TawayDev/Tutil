@@ -6,25 +6,25 @@ import lombok.Setter;
 @Setter
 @Getter
 public class Trio<T, S, I> {
-    private T first;
-    private S second;
-    private I third;
+    private T x;
+    private S y;
+    private I z;
 
-    public Trio(T first, S second, I third) {
-        this.first = first;
-        this.second = second;
-        this.third = third;
+    public Trio(T x, S y, I z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 
-    public Class<?> getFirstType() {
-        return first != null ? first.getClass() : null;
+    public Class<?> getTypeX() {
+        return x != null ? x.getClass() : null;
     }
 
-    public Class<?> getSecondType() {
-        return second != null ? second.getClass() : null;
+    public Class<?> getTypeY() {
+        return y != null ? y.getClass() : null;
     }
 
-    public Class<?> getThirdType() {
-        return third != null ? third.getClass() : null;
+    public Class<?> getTypeZ() {
+        return z != null ? z.getClass() : null;
     }
 }
