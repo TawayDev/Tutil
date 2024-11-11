@@ -25,9 +25,19 @@
 ## Download
 Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https://repsy.io/) so you may need to add it to maven repos.
 ```pom
-<dependency>
-  <groupId>dev.taway</groupId>
-  <artifactId>Tutil</artifactId>
-  <version>0.2.3</version>
-</dependency>
+        <dependency>
+            <groupId>dev.taway</groupId>
+            <artifactId>tutil</artifactId>
+            <version>0.2.4.3</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.0.Final</version>
+        </dependency>
+```
+And this to your `moudle-info.java`:
+```module-info
+    requires dev.taway.tutil;
+    requires org.hibernate.validator;
 ```

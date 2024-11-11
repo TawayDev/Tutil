@@ -26,8 +26,8 @@ public enum LogLevel {
     INFO(2, "INFO", ""),
     SUCCESS(2, "SUCCESS", ConsoleColor.GREEN.COLOR),
     FAILURE(2, "FAILURE", ConsoleColor.RED.COLOR),
-    WARN(3, "WARN", ConsoleColor.YELLOW.COLOR),
-    ERROR(4, "ERROR", ConsoleColor.RED.COLOR),
+    WARN(3, "WARN", ConsoleColor.YELLOW_BRIGHT.COLOR),
+    ERROR(4, "ERROR", ConsoleColor.RED_BRIGHT.COLOR),
     FATAL(5, "FATAL", ConsoleColor.PURPLE.COLOR);
 
     public final int LEVEL;

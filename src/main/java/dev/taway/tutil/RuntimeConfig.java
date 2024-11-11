@@ -95,6 +95,12 @@ public final class RuntimeConfig {
          * true = {@code CONSTRUCTOR}<br>
          */
         public static boolean REPLACE_INIT = false;
+
+        /**
+         * When you're logging something and input multiple objects they will be concatenated and between each entry this string will be inserted.<br>
+         * For example if this value is set to {@code ", "} and you input ("one",2,"three") then the result will be formatted as {@code one, 2, three}
+         */
+        public static String MULTIPLE_OBJECTS_LOGGED_SEPARATOR = ", ";
     }
 
     /**
@@ -138,9 +144,7 @@ public final class RuntimeConfig {
          * </p>
          *
          * <p>
-         * The initial value of this variable is set to {@code true} in the {@link RSA} class,
-         * which is the runtime configuration class for the {@link RSA} class.
-         * </p>
+         * The initial value of this variable is set to {@code true}.
          *
          * @since 0.1.5
          *

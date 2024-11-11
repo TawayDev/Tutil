@@ -2,8 +2,8 @@ package dev.taway.tutil.io.file;
 
 import dev.taway.tutil.exception.io.FileException;
 import dev.taway.tutil.io.PathChecker;
+import dev.taway.tutil.logging.Logger;
 import lombok.Getter;
-import lombok.SneakyThrows;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
@@ -18,12 +18,17 @@ import java.util.ArrayList;
 @Getter
 public class File implements IFile {
 
+    private static final Logger log = new Logger();
     String absolutePath;
     String path;
 
-    @SneakyThrows
     public File(String path) {
-        if (!PathChecker.pathIsFile(path)) throw new FileException("Path \"" + path + "\" is not a valid file path.");
+        try {
+            if (!PathChecker.pathIsFile(path))
+                throw new FileException("Path \"" + path + "\" is not a valid file path.");
+        } catch (FileException e) {
+            log.error(e);
+        }
         java.io.File file = new java.io.File(path);
         this.absolutePath = file.getAbsolutePath();
         this.path = path;

@@ -11,6 +11,6 @@ public class AnotherEventHandler implements IEventHandler {
 
     @Override
     public void onEvent() {
-        logger.info("High priority event broadcasted!");
+        logger.trace("High priority event broadcasted!");
     }
 }
