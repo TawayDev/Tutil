@@ -6,7 +6,7 @@
 
     <groupId>dev.taway</groupId>
     <artifactId>tutil</artifactId>
-    <version>0.2.4.2</version>
+    <version>0.2.4.3</version>
     <name>tutil</name>
     <distributionManagement>
         <repository>

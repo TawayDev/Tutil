@@ -402,6 +402,10 @@ public class Logger {
     private void toConsole(LogLevel logLevel, String method, String text) {
         if (RuntimeConfig.LOGGING.DISABLE_LOG_CONSOLE) return;
         if (!forceLogToConsole && logLevel.LEVEL < RuntimeConfig.LOGGING.MINIMUM_LOG_LEVEL_CONSOLE.LEVEL) return;
+//        Makes important log info more visible in console:
+        if(logLevel.name().toLowerCase().contains("error") || logLevel.name().toLowerCase().contains("warn") || logLevel.name().toLowerCase().contains("fatal")) {
+            text = logLevel.COLOR + text + ConsoleColor.RESET.COLOR;
+        }
         final String message = prepareMessage(RuntimeConfig.LOGGING.LOG_FORMAT_CONSOLE, logLevel, method, text, logLevel.COLOR);
         System.out.println(message);
     }
