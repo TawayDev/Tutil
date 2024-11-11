@@ -1,6 +1,5 @@
 package dev.taway.tutil.sorting;
 
-import dev.taway.tutil.logging.Logger;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
