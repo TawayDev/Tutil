@@ -2,7 +2,6 @@ package dev.taway.tutil.io.file;
 
 import dev.taway.tutil.exception.io.FileException;
 import dev.taway.tutil.io.PathChecker;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 /***
  * A simple wrapper for java.io.File
- * @version 0.2.5
+ * @version 0.2.5.1
  * @since 0.1
  */
 public class File implements IFile {
