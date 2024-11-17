@@ -32,7 +32,7 @@ public interface IFile {
 
     String getPath();
 
-//    void open();
-//
-//    void close();
+    void setKeepOpen(boolean keepOpen);
+
+    void close();
 }

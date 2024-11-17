@@ -38,7 +38,7 @@ Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https:/
         <dependency>
             <groupId>dev.taway</groupId>
             <artifactId>tutil</artifactId>
-            <version>0.2.5</version>
+            <version>0.2.5.1</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>

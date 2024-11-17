@@ -12,7 +12,7 @@ import java.util.List;
 
 public class LogBuffer {
     private static final Logger log = new Logger();
-    @Getter private static List<LogObject> logBuffer = Collections.synchronizedList(new ArrayList<>());;
+    @Getter private static List<LogObject> logBuffer = Collections.synchronizedList(new ArrayList<>());
 
     public static synchronized void addLog(LogObject logObject) {
         logBuffer.add(logObject);
@@ -43,7 +43,9 @@ public class LogBuffer {
                 }
 //                If the output path changes
                 if(!file.getPath().equals(previousLogPath)) {
+                    file.close();
                     file = new File(logObject.getFilePath());
+                    file.setKeepOpen(true);
                     previousLogPath = logObject.getFilePath();
                 }
 //                FIXME: Add file open, close and a way to not auto-close file stream.
@@ -65,6 +67,8 @@ public class LogBuffer {
                 logBuffer.subList(0, logsFlushed).clear();
             }
         } finally {
+            if(file != null)
+                file.close();
             logBuffer.clear();
         }
 
