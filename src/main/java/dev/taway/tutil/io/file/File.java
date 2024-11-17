@@ -101,16 +101,20 @@ public class File implements IFile {
     }
 
     /**
-     * Appends text to the end of the file.
+     * Appends text to the end of the file,
      *
      * @param text Text to be written
-     * @version 0.1.1
+     * @param newLinePrepend True will put new line before writing text
+     * @param newLineAppend True will put new line after writing text
+     * @version 0.2.5
      * @since 0.1
      */
     @Override
-    public void append(String text, boolean newLine) throws IOException {
+    public void append(String text, boolean newLinePrepend, boolean newLineAppend) throws IOException {
         java.io.File file = new java.io.File(absolutePath);
-        text = newLine ? "\n" + text : text;
+        text = newLinePrepend ? "\n" + text : text;
+        text = newLineAppend ? text + "\n" : text;
+//        System.out.println("[\\\\\\]" + newLinePrepend + " " + newLineAppend + " [" + text + "]");
         FileWriter fileWriter = new FileWriter(file, true);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
         bufferedWriter.append(text);
@@ -195,6 +199,20 @@ public class File implements IFile {
             }
         }
     }
+
+//    /**
+//     * Opens the file.
+//     */
+//    public void open() {
+//
+//    }
+//
+//    /**
+//     * Closes the file.
+//     */
+//    public void close() {
+//
+//    }
 
     @Override
     public String getAbsolutePath() {

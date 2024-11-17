@@ -9,6 +9,8 @@ import dev.taway.tutil.logging.Logger;
 import dev.taway.tutil.net.sql.SQLExecutor;
 import dev.taway.tutil.time.Stopwatch;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Configuration for runtime of Tutil. You can modify a lot of behavior from here directly at runtime.<br>
  * This makes it easier for the developer that builds with this library to specify one thing here, and it will be applied globally.
@@ -101,6 +103,28 @@ public final class RuntimeConfig {
          * For example if this value is set to {@code ", "} and you input ("one",2,"three") then the result will be formatted as {@code one, 2, three}
          */
         public static String MULTIPLE_OBJECTS_LOGGED_SEPARATOR = ", ";
+
+        public static class BUFFER {
+            /**
+             * How many {@link #TIME_UNIT} after the buffer is initialized it should take to perform the first log file write.
+             */
+            public static int FLUSH_INITIAL_DELAY = 0;
+
+            /**
+             * How many {@link #TIME_UNIT} between buffer outputs.
+             */
+            public static int FLUSH_PERIOD = 5;
+
+            /**
+             * How many logs should be queued up before the buffer is flushed before schedule.
+             */
+            public static int MAX_LOG_QUEUE_BEFORE_FORCE_FLUSH = 5000;
+
+            /**
+             * Time unit that affects how {@link #FLUSH_INITIAL_DELAY} and {@link #FLUSH_PERIOD} work. If this is set to seconds then the other two variables are in seconds.
+             */
+            public static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
+        }
     }
 
     /**

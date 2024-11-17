@@ -4,6 +4,9 @@ import dev.taway.tutil.RuntimeConfig;
 import dev.taway.tutil.format.StringFormatter;
 import dev.taway.tutil.format.TimeFormatter;
 import dev.taway.tutil.io.file.File;
+import dev.taway.tutil.logging.buffer.LogBuffer;
+import dev.taway.tutil.logging.buffer.LogBufferFlushScheduler;
+import dev.taway.tutil.logging.buffer.LogObject;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -393,8 +396,12 @@ public class Logger {
         if (!forceLogToFile && logLevel.LEVEL < RuntimeConfig.LOGGING.MINIMUM_LOG_LEVEL_FILE.LEVEL) return;
         try {
             final String message = prepareMessage(RuntimeConfig.LOGGING.LOG_FORMAT_FILE, logLevel, method, text, "");
-            file.append(message, true);
-        } catch (IOException e) {
+//            file.append(message, false, true);
+//            Buffer flusher scheduler smart words blah blah jargon it's 5AM and I have not slept yet lazy load thing:
+            LogBufferFlushScheduler.initializeScheduler();
+//            Add log to buffer:
+            LogBuffer.addLog(new LogObject(file.getPath(), message));
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

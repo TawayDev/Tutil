@@ -20,7 +20,7 @@ public interface IFile {
 
     void append(String text) throws IOException;
 
-    void append(String text, boolean newLine) throws IOException;
+    void append(String text, boolean newLinePrepend, boolean newLineAppend) throws IOException ;
 
     String readAllAsString() throws IOException;
 
@@ -31,4 +31,8 @@ public interface IFile {
     String getAbsolutePath();
 
     String getPath();
+
+//    void open();
+//
+//    void close();
 }

@@ -1,4 +1,14 @@
-- **Runtime Configuration**: Allows for project-wide configuration changes with ease and consistency.
+![Stars](https://img.shields.io/github/stars/TawayDev/Tutil)
+![Language](https://img.shields.io/github/languages/top/TawayDev/Tutil)
+![Issues](https://img.shields.io/github/issues/TawayDev/Tutil)
+![LastCommit](https://img.shields.io/github/last-commit/TawayDev/Tutil)
+## What's Tutil?
+Tutil (short for Taway's Utilities) is a Java code library where I put all code that I find useful or am tired of re-writing in all of my projects.
+Basically a tool for me to speed up development. I've heard that having one library that does everything is a bad idea. Yea maybe so if this project grows
+too big I will just split it into more. As it is now there's no need for that.
+
+## Features
+- **Runtime Configuration**: Change once, change everywhere.
 
 - **Logging**: An efficient logging class that fulfills essential logging needs.
 
@@ -28,7 +38,7 @@ Add this to your pom.xml (Maven). The repo is being hosted at [repsy.io](https:/
         <dependency>
             <groupId>dev.taway</groupId>
             <artifactId>tutil</artifactId>
-            <version>0.2.4.3</version>
+            <version>0.2.5</version>
         </dependency>
         <dependency>
             <groupId>org.hibernate.validator</groupId>
