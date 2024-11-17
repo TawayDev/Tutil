@@ -3,6 +3,7 @@ package dev.taway.tutil.io.file;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,7 +81,7 @@ class FileTest {
 
         file.create();
         file.overwrite("hello world!");
-        file.append("hello world!", true);
+        file.append("hello world!", true, false);
         String contents = file.readAllAsString();
         assertEquals("hello world!\nhello world!", contents);
         file.delete();
@@ -93,8 +94,9 @@ class FileTest {
 
         file.create();
         file.overwrite("hello world!");
-        file.append("hello world!", true);
+        file.append("hello world!", true, false);
         String[] contents = file.readAllAsStringArr();
+//        System.out.println(contents.length + " | " + Arrays.toString(contents));
         assertEquals("hello world!hello world!", contents[0] + contents[1]);
         file.delete();
     }

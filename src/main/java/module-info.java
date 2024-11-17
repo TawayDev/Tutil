@@ -25,6 +25,7 @@ module dev.taway.tutil {
     exports dev.taway.tutil.io.file;
     exports dev.taway.tutil.io.json;
     exports dev.taway.tutil.logging;
+    exports dev.taway.tutil.logging.buffer;
     exports dev.taway.tutil.net.api;
     exports dev.taway.tutil.net.sql;
     exports dev.taway.tutil.sorting;
